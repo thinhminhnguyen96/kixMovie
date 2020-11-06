@@ -24,8 +24,11 @@ import { createAction } from "../../redux/action";
 import swal from "sweetalert";
 import { deleteUser, detailUser } from "../../redux/action/userAction";
 import InfoIcon from '@material-ui/icons/Info';
+import login from "../../asset/images/user.png";
+import { Link } from "react-router-dom";
 
-const MovieItem = (props) => {
+
+const UserItem = (props) => {
   const dispatch = useDispatch();
   const {
     taiKhoan,
@@ -38,11 +41,11 @@ const MovieItem = (props) => {
   } = useMemo(()=>{
     return props.item
   },[props.item]);
-  const [open, setOpen] = useState(false);
   
   
-  const handleToggle = useCallback((values)=>() => {
-    setOpen(values);
+  
+
+  const handleToggle = useCallback(() => {
     dispatch(detailUser(taiKhoan))
   },[taiKhoan]);
 
@@ -107,7 +110,7 @@ const MovieItem = (props) => {
           </CardContent>
 
           <Box className={props.classes.btnContent}>
-                <Button className={props.classes.btnIconEdit} color={"primary"} onClick={handleToggle(true)}>
+                <Button className={props.classes.btnIconEdit} color={"primary"} onClick={handleToggle}>
             <InfoIcon className={props.classes.iconsize} />
           </Button>
           <Button className={props.classes.btnIconEdit} color={"secondary"} onClick={handelEdit}>
@@ -122,37 +125,9 @@ const MovieItem = (props) => {
       </Card>
 
       {/* MODAL */}
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        className={props.classes.modal}
-        open={open}
-        onClose={handleToggle(false)}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
-      >
-        <Fade in={open}>
-          <div className={props.classes.paper}>
-            <h2 id="transition-modal-title">{hoTen}</h2>
-            <Grid container>
-              <Grid item xs={12} md={8} className={props.classes.paperRigth}>
-                <p>Mã Nhóm : {maNhom}</p>
-                <p>Tài Khoản : {taiKhoan}</p>
-                <p>Mật Khẩu : {matKhau}</p>
-                <p>Số điện thoại : {soDt}</p>
-                <p>Email :{email}</p>
-                <p>Mã loại người dùng : {maLoaiNguoiDung}</p>
-                <p>Họ Tên :{hoTen}</p>
-              </Grid>
-            </Grid>
-          </div>
-        </Fade>
-      </Modal>
+      
     </div>
   );
 };
 
-export default memo(withStyles(styles, { withTheme: true })(MovieItem));
+export default memo(withStyles(styles, { withTheme: true })(UserItem));

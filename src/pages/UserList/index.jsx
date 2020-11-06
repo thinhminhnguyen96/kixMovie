@@ -25,6 +25,7 @@ import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import InfoIcon from '@material-ui/icons/Info';
 import SearchIcon from "@material-ui/icons/Search";
 import Loading from "../../Loading";
+import ModalUserDetail from "../../components/ModelUserDetail"
 
 
 
@@ -58,6 +59,9 @@ const UserList = (props) => {
   const loading = useSelector((state)=>{
     return state.user.loading
   })
+  const modalUserDetail = useSelector((state)=>{
+    return state.user.modalUserDetail;
+  });
   
   useEffect(() => {
     if( searchActive && search!=="" && listUserSearch!==null){  
@@ -250,6 +254,7 @@ const UserList = (props) => {
               {/* MODAL */}
               {modalUser && <ModalUser /> }
               
+              { modalUserDetail && <ModalUserDetail/>}
               
             </Box>
           </Box>

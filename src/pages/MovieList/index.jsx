@@ -22,6 +22,7 @@ import { Pagination } from "@material-ui/lab";
 import TheatersIcon from "@material-ui/icons/Theaters";
 import ContactSupportIcon from '@material-ui/icons/ContactSupport';
 import Loading from "../../Loading";
+import ModalUserDetail from "../../components/ModelUserDetail"
 
 const MovieList = (props) => {
   const perToPage = 8;
@@ -48,7 +49,10 @@ const MovieList = (props) => {
   });
   const loading = useSelector((state)=>{
     return state.movie.loading
-  })
+  });
+  const modalUserDetail = useSelector((state)=>{
+    return state.user.modalUserDetail;
+  });
 
   useEffect(() => {
     dispatch(fetchMovie(currentPage,perToPage));
@@ -189,6 +193,7 @@ const MovieList = (props) => {
               {/* MODAL */}
               {modalActive && <ModalMovie /> }
               
+              { modalUserDetail && <ModalUserDetail/>}
               
             </Box>
           </Box>

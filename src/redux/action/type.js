@@ -20,6 +20,7 @@ export const HIDE_MODALUSER = "modalActive/HIDE_MODALUSER";
 export const SET_SEARCH = "user/SET_SEARCH";
 export const SET_USERSEARCH = "user/SET_USERSEARCH";
 export const SET_USERDETAIL = "user/SET_USERDETAIL";
+export const HIDE_USERDETAIL = "user/HIDE_USERDETAIL";
 
 export const SET_SHOWTIME = "user/SET_SHOWTIME";
 export const SET_MODALSHOWTIME = "user/SET_MODALSHOWTIME";

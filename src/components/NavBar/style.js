@@ -1,6 +1,7 @@
 import { fade } from "@material-ui/core/styles";
 const style = (theme) => {
   return {
+    
     backGround: {
       backgroundColor: "#303A52",
       color: "#22D1EE",
@@ -10,6 +11,10 @@ const style = (theme) => {
       display: "flex",
       position: "relative",
       borderLeft: "1px solid #A5A4BF",
+      '& .MuiPaper-root':{
+        marginTop:"50px",
+        transform: "translateX(-10px)",
+      }
     },
     search: {
       position: "absolute",
@@ -65,6 +70,13 @@ const style = (theme) => {
           width: theme.spacing(50),
         },
       },
+      
+    },
+    loginMenu:{
+      '& .MuiPaper-root':{
+        marginTop:"50px",
+        transform:"translateX(-10px) !important",
+      }
     },
 
     login: {

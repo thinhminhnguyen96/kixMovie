@@ -13,7 +13,11 @@ const style = (theme) => {
     content: {
       padding: theme.spacing(4, 6),
     },
-    contentItem: {},
+    contentItem: {
+      maxWidth:"100%",
+      marginTop:'20px',
+      padding:"10px 3px !important"
+    },
     item: {
       display: "flex",
       backgroundColor: "#fff",

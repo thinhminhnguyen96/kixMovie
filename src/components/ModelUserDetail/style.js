@@ -85,6 +85,38 @@ const style = (theme) => {
       marginBlockEnd: "unset",
       paddingRight:"5px",
     },
+    table: {
+      minWidth: 500,
+      '& .MuiTablePagination-caption': {
+          fontSize: '13px',
+      }
+
+  },
+  thead: {
+
+  },
+  wraper: {
+      position: ' absolute',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%,-50%)',
+  },
+  textInfomation: {
+      color: '#000',
+      fontSize: theme.spacing(1.8),
+      textTransform: 'capitalize',
+      fontFamily: 'SF Medium',
+      letterSpacing: '0.5px',
+      [theme.breakpoints.down(`${961}`)]: {
+          fontSize: theme.spacing(1.3),
+      },
+  },
+  pagination:{
+    '& .MuiPagination-ul':{
+      flexWrap:"nowrap",
+    }
+  }
+ 
   };
 };
 export default style;

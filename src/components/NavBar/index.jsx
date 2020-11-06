@@ -13,29 +13,34 @@ import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
 import React, { useCallback, useState } from "react";
 import { AccountBox } from "@material-ui/icons";
-import login from "../../asset/images/movie3.jpg";
+import login from "../../asset/images/user.png";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { detailUser } from "../../redux/action/userAction";
 
 const NavBar = (props) => {
+  const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
-
+  const credentials = useSelector((state) => {
+    return state.credentials.credentialsA;
+  });
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setAnchorEl(null);
-  };
+  },[]);
+  const handleDetail = useCallback(() => {
+    dispatch(detailUser(credentials.taiKhoan));
+  },[credentials]);
   const handelLogout = useCallback(()=>{
     localStorage.setItem("t", null); //Lưu token trên local đề F5 không mất
         localStorage.setItem("o", null);
   },[])
 
-  const credentials = useSelector((state) => {
-    return state.credentials.credentialsA;
-  });
+  
   // const object = localStorage.getItem("o");
 
   return (
@@ -70,10 +75,10 @@ const NavBar = (props) => {
           keepMounted
           open={Boolean(anchorEl)}
           onClose={handleClose}
+          className={props.classes.loginMenu}
         >
-          <MenuItem onClick={handleClose}>Profile</MenuItem>
-          <MenuItem onClick={handleClose}>My account</MenuItem>
-          <MenuItem onClick={handelLogout}> <Link to="/dangnhap">Logout</Link> </MenuItem>
+          <MenuItem onClick={handleDetail}>Thông tin cá nhân</MenuItem>
+          <MenuItem onClick={handelLogout}> <Link to="/dangnhap">Đăng xuất</Link> </MenuItem>
         </Menu>
       </Box>
     </Box>

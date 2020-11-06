@@ -1,4 +1,4 @@
-import {  SET_USER,SET_USERDETAIL,SET_USERSEARCH } from "../action/type";
+import {  HIDE_USERDETAIL, SET_USER,SET_USERDETAIL,SET_USERSEARCH } from "../action/type";
 
 let initialState = {
   userListSearch:[],
@@ -6,7 +6,9 @@ let initialState = {
   userList: [],
   totalCount:1,
   totalPages:1,
+  modalUserDetail:false,
   detail:[],
+  detailBook:[],
   loading:true,
 };
 
@@ -28,7 +30,13 @@ const reducer = (state = initialState, { type, payload }) => {
         return { ...state };
       }
       case SET_USERDETAIL:{
+        state.modalUserDetail = true;
         state.detail = payload;
+        state.detailBook = payload.thongTinDatVe;
+        return {...state}
+      }
+      case HIDE_USERDETAIL:{
+        state.modalUserDetail = false;
         return {...state}
       }
     default:

@@ -30,6 +30,7 @@ import TheatersIcon from "@material-ui/icons/Theaters";
 import Backdrop from "@material-ui/core/Backdrop";
 import CancelIcon from "@material-ui/icons/Cancel";
 import Loading from "../../Loading";
+import ModalUserDetail from "../../components/ModelUserDetail"
 
 // import  fetchMovie  from "../../redux/action/movie";
 
@@ -63,7 +64,11 @@ const ShowTime = (props) => {
 
   const handleToggle = useCallback((values)=>()=>{
     setOpen(values);
-  })
+  });
+  const modalUserDetail = useSelector((state)=>{
+    return state.user.modalUserDetail;
+  });
+  
   
   
   const {biDanh,
@@ -418,7 +423,10 @@ const ShowTime = (props) => {
             </Box>
           </Box>
         </Box>
+
+        { modalUserDetail && <ModalUserDetail/>}
       </Box>
+
     </div>
   );
 };
