@@ -46,8 +46,11 @@ const style = (theme) => {
     },
     
     paperRigth: {
-      paddingLeft: "30px",
+      
       display:"block",
+      border:"1px solid #303A52",
+      borderRadius:"5px",
+      padding:theme.spacing(2,3)
     },
     cardArea:{
       position:"relative"
@@ -89,6 +92,9 @@ const style = (theme) => {
       minWidth: 500,
       '& .MuiTablePagination-caption': {
           fontSize: '13px',
+      },
+      '& .MuiTableCell-head':{
+        fontWeight:"bolder"
       }
 
   },
@@ -107,11 +113,14 @@ const style = (theme) => {
       textTransform: 'capitalize',
       fontFamily: 'SF Medium',
       letterSpacing: '0.5px',
+      textAlign:"center",
       [theme.breakpoints.down(`${961}`)]: {
           fontSize: theme.spacing(1.3),
       },
   },
   pagination:{
+    paddingTop:theme.spacing(2),
+    
     '& .MuiPagination-ul':{
       flexWrap:"nowrap",
     }

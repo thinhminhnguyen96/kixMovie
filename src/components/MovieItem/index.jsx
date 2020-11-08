@@ -5,7 +5,6 @@ import {
   CardActionArea,
   CardActions,
   CardContent,
-  CardHeader,
   CardMedia,
   Fade,
   Grid,
@@ -15,21 +14,21 @@ import {
   withTheme,
 } from "@material-ui/core";
 import styles from "./style";
-import React, { Fragment, useMemo, useState } from "react";
-import img from "../../asset/images/movie3.jpg";
+import React, {  useMemo, useState } from "react";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Backdrop from "@material-ui/core/Backdrop";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useCallback } from "react";
-import { SET_MODALACTIVE, SHOW_MODALMOVIE } from "../../redux/action/type";
+import { SHOW_MODALMOVIE } from "../../redux/action/type";
 import { createAction } from "../../redux/action";
 import {deleteMovie, detailMovie} from "../../redux/action/movieAction";
 import swal from "sweetalert";
 import { fetchShowTime } from "../../redux/action/showTimeAction";
 import InfoIcon from '@material-ui/icons/Info';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import CloseIcon from '@material-ui/icons/Close';
 
 const MovieItem = (props) => {
   const {
@@ -53,11 +52,11 @@ const MovieItem = (props) => {
   const handleToggle = useCallback((value) =>()=> {
     setOpen(value);
     dispatch(detailMovie(maPhim))
-  },[]); 
+  },[maPhim]); 
 
   const handleToggleTrailer = useCallback((value) =>()=> {
     setOpenTrailer(value);
-  },[]); 
+  },[props.item]); 
 
   const getDetail = useCallback(()=>{
     dispatch(fetchShowTime(maPhim));
@@ -67,7 +66,7 @@ const MovieItem = (props) => {
     dispatch(createAction(SHOW_MODALMOVIE,{movies:value,
     role:2 }))
     
-  },[]);
+  },[props.item]);
 
   const handelDelete = useCallback((maPhim)=>()=>{
     swal({
@@ -91,7 +90,7 @@ const MovieItem = (props) => {
 
 
     
-  },[])
+  },[props.item])
 
  
   return (
@@ -188,7 +187,10 @@ const MovieItem = (props) => {
       >
         <Fade in={openTrailer}>
           <div className={props.classes.paperTrailer}>
-            <h2 id="transition-modal-trailer">{tenPhim}</h2>
+            <Box justifyContent={"space-between"} display={"flex"}>
+              <h2>{tenPhim}</h2>
+              <Button onClick={handleToggleTrailer(false)}><CloseIcon/></Button>
+            </Box>
             <Grid container>
               <Grid item xs={12} >
               <iframe width="560" height="315" src={trailer} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

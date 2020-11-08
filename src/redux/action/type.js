@@ -5,6 +5,8 @@ export const SET_ACTIVE_MOVIE = "active/SET_ACTIVE_MOVIE";
 export const SET_ACTIVE_USER = "active/SET_ACTIVE_USER";
 export const SET_ACTIVE_CALENDAR = "active/SET_ACTIVE_CALENDAR";
 export const SET_ACTIVE_HOME = "active/SET_ACTIVE_HOME";
+export const SET_ACTIVE_ARROW = "active/SET_ACTIVE_ARROW";
+export const HIDE_ACTIVE_ARROW = "active/HIDE_ACTIVE_ARROW";
 
 
 export const SET_MOVIE = "movie/SET_MOVIE";

@@ -2,8 +2,8 @@ import { ADD_MOVIE, SET_MOVIE } from "../action/type";
 
 let initialState = {
   movieList: [],
-  totalCount:1,
-  totalPages:1,
+  totalCount:0,
+  totalPages:0,
   loading:true,
 
 };

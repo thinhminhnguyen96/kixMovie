@@ -1,34 +1,23 @@
-import { Collapse, Fade, IconButton, makeStyles, Modal, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TableRow } from "@material-ui/core";
+import { Collapse, IconButton, makeStyles, Modal, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TableRow } from "@material-ui/core";
 import {
   Box,
   Button,
-  Card,
-  CardActionArea,
-  CardActions,
-  CardContent,
   Grid,
-  Typography,
   withStyles,
   withTheme,
 } from "@material-ui/core";
 import styles from "./style";
 import React, { memo, useMemo, useState } from "react";
-import EditIcon from "@material-ui/icons/Edit";
-import DeleteIcon from "@material-ui/icons/Delete";
 import Backdrop from "@material-ui/core/Backdrop";
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback } from "react";
-import {  HIDE_USERDETAIL, SHOW_MODALUSER } from "../../redux/action/type";
+import {  HIDE_USERDETAIL,} from "../../redux/action/type";
 import { createAction } from "../../redux/action";
-import swal from "sweetalert";
-import { deleteUser, detailUser } from "../../redux/action/userAction";
-import InfoIcon from '@material-ui/icons/Info';
 import login from "../../asset/images/user.png";
-import { Link } from "react-router-dom";
-import { DataGrid } from "@material-ui/data-grid";
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { Pagination } from "@material-ui/lab";
+import CloseIcon from '@material-ui/icons/Close';
 
 
 const useRowStyles = makeStyles((theme) => ({
@@ -81,7 +70,7 @@ const StyledTableRow = withStyles((theme) => ({
 
 const ModalUserDetail = (props) => {
   const dispatch = useDispatch();
-  const [rowsPerPage, setRowsPerPage] = useState(2);
+  const [rowsPerPage, setRowsPerPage] = useState(3);
   const [choose,setChoose] = useState(false);
   const [page, setPage] = useState(0);
   
@@ -123,45 +112,13 @@ const ModalUserDetail = (props) => {
     return (
         <React.Fragment>
             <TableRow className={classes.root}>
-                <TableCell align="center">
-                    <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
-                        {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                    </IconButton>
-                </TableCell>
+                
                 <TableCell align="center" className={classes.thead}>{row.tenPhim}</TableCell>
                 <TableCell align="center">{changeFormatDate(row.ngayDat)}</TableCell>
                 <TableCell align="center">{row.maVe}</TableCell>
                 <TableCell align="center">{row.giaVe.toLocaleString()}</TableCell>
             </TableRow>
-            <TableRow>
-                <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-                    <Collapse in={open} timeout="auto" unmountOnExit>
-                        <Box margin={0.3}>
-                            <div className={classes.titleDiv}>
-                                Danh Sách ghế đặt
-                            </div>
-                            <Table size="small" aria-label="customized table">
-                                <TableHead>
-                                    <TableRow>
-                                        <StyledTableCell align="center" className={classes.thead}>Mã ghế</StyledTableCell>
-                                        <StyledTableCell align="center" className={classes.thead}>Tên ghế</StyledTableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {row.danhSachGhe.map((item, index) => (
-                                        <StyledTableRow key={item.maGhe} style={{ borderBottom: index === (row.danhSachGhe.length - 1) && 'unset' }}>
-                                            <StyledTableCell align="center">
-                                                {item.maGhe}
-                                            </StyledTableCell>
-                                            <StyledTableCell align="center">{item.tenGhe}</StyledTableCell>
-                                        </StyledTableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </Box>
-                    </Collapse>
-                </TableCell>
-            </TableRow>
+            
         </React.Fragment>
     );
 }
@@ -197,14 +154,18 @@ const ModalUserDetail = (props) => {
         <Box >
         
           <div className={props.classes.paper}>
-            <h2>{hoTen}</h2>
+            <Box justifyContent={"space-between"} display={"flex"}>
+              <h2>{hoTen}</h2>
+              <Button onClick={handleClose}><CloseIcon/></Button>
+            </Box>
+            
             <Grid container>
               <Grid item xs={12} md={3} className={props.classes.paperLeft}>
                 <Box>
                   <img src={login} alt="" width={"100px"} height={"100px"}/>
                 </Box>
-                <Button onClick={handleSelect(false)}>Thông tin cá nhân </Button>
-                <Button onClick={handleSelect(true)}>Xem lịch sử đặt vé</Button>
+                <Button color={!choose ? "secondary" : ""} onClick={handleSelect(false)}>Thông tin cá nhân </Button>
+                <Button color={choose ? "secondary" : ""} onClick={handleSelect(true)}>Xem lịch sử đặt vé</Button>
                 
               </Grid>
               <Grid item xs={12} md={9} className={props.classes.paperRigth}>
@@ -214,7 +175,7 @@ const ModalUserDetail = (props) => {
                 <Table className={props.classes.table} aria-label="  table" >
                     <TableHead>
                         <TableRow>
-                            <TableCell />
+                            
                             <TableCell align="center" className={props.classes.thead}>Tên phim</TableCell>
                             <TableCell align="center" className={props.classes.thead}>Ngày đặt</TableCell>
                             <TableCell align="center" className={props.classes.thead}> Mã Vé</TableCell>
@@ -233,12 +194,12 @@ const ModalUserDetail = (props) => {
                     </TableBody>
                     <TableFooter>
                         <TableRow>
-                            <Pagination count={count} page={page} onChange={handleChange} className={props.classes.pagination}/>
+                            <Pagination count={count} page={page} onChange={handleChange} className={props.classes.pagination} variant="outlined" color="secondary"/>
                         </TableRow>
                     </TableFooter>
                 </Table>
             </TableContainer> :
-                <div className={props.classes.wraper}>
+                <div className={props.classes.paperRigth}>
                     <div className={props.classes.textInfomation}>
                         Không có vé nào cả !
                     </div>

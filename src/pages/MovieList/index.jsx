@@ -53,6 +53,9 @@ const MovieList = (props) => {
   const modalUserDetail = useSelector((state)=>{
     return state.user.modalUserDetail;
   });
+  const activeArrow = useSelector((state)=>{
+    return state.active.active.arrow;
+  });
 
   useEffect(() => {
     dispatch(fetchMovie(currentPage,perToPage));
@@ -91,10 +94,10 @@ const MovieList = (props) => {
       {loading ? <Loading/> : <div>
       <Box display={"flex"}>
         {/* SIDEBAR */}
-        <Box className={props.classes.left} width={"20%"}>
+        <Box className={ !activeArrow ? props.classes.left : props.classes.left2} >
           <SideBar />
         </Box>
-        <Box className={props.classes.right} width={"80%"}>
+        <Box className={!activeArrow ? props.classes.right : props.classes.right2}>
           {/* =====NAVBAR===== */}
           <NavBar />
 
@@ -173,7 +176,7 @@ const MovieList = (props) => {
                 </Typography>
                 <Button className={props.classes.btnItem} onClick={handleOpen}>
                   <AddIcon />
-                  Thêm Mới
+                  <p className={props.classes.btnItemText}>Thêm Mới</p> 
                 </Button>
               </Box>
 

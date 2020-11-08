@@ -9,7 +9,6 @@ import {
   InputAdornment,
   InputLabel,
   TextField,
-  Typography,
   useTheme,
   withStyles,
   Zoom,
@@ -17,7 +16,7 @@ import {
 import styles from "./style";
 import React, { Fragment, useCallback, useMemo, useState } from "react";
 import { signIn } from "../../redux/action/auth";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import signInBanner from '../../asset/images/signInBanner.svg';
 import topRightDop from '../../asset/images/topRightDop.svg';
 import logoLight from '../../asset/images/LogoLight.svg';

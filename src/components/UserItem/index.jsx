@@ -3,29 +3,23 @@ import {
   Button,
   Card,
   CardActionArea,
-  CardActions,
   CardContent,
-  Fade,
-  Grid,
-  Modal,
   Typography,
   withStyles,
   withTheme,
 } from "@material-ui/core";
 import styles from "./style";
-import React, { memo, useMemo, useState } from "react";
+import React, { memo, useMemo } from "react";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
-import Backdrop from "@material-ui/core/Backdrop";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useCallback } from "react";
 import {  SHOW_MODALUSER } from "../../redux/action/type";
 import { createAction } from "../../redux/action";
 import swal from "sweetalert";
 import { deleteUser, detailUser } from "../../redux/action/userAction";
 import InfoIcon from '@material-ui/icons/Info';
-import login from "../../asset/images/user.png";
-import { Link } from "react-router-dom";
+
 
 
 const UserItem = (props) => {
@@ -45,25 +39,17 @@ const UserItem = (props) => {
   
   
 
-  const handleToggle = useCallback(() => {
+  const handleToggle = useCallback((taiKhoan)=>() => {
     dispatch(detailUser(taiKhoan))
-  },[taiKhoan]);
+  },[props.item]);
 
-  const handelEdit = useCallback (()=>{
-    dispatch(createAction(SHOW_MODALUSER,{users: {
-      taiKhoan:taiKhoan,
-      matKhau:matKhau,
-      email:email,
-      soDt:soDt,
-      maNhom:maNhom,
-      maLoaiNguoiDung:maLoaiNguoiDung,
-      hoTen:hoTen,
-    },
+  const handelEdit = useCallback ((values)=>()=>{
+    dispatch(createAction(SHOW_MODALUSER,{users:values ,
     role:2
     }))
-  },[])
+  },[props.item])
 
-  const handelDelete = useCallback(()=>{
+  const handelDelete = useCallback((taiKhoan)=>()=>{
     swal({
       title: "Bạn chắc chứ?",
       text: "Bạn có muốn xóa người dùng này không!",
@@ -84,7 +70,7 @@ const UserItem = (props) => {
 
 
     
-  },[])
+  },[props.item])
 
  
   return (
@@ -98,7 +84,7 @@ const UserItem = (props) => {
               <Typography variant="h6" component="h6" >
                 {/* Cắt bớt chữ */}
                 {hoTen.substr(0,1)}
-              </Typography>
+               </Typography> 
             </Box>
             <Box padding={"inherit"} fontSize={"20px"}>
                 <Box paddingLeft={"10px"}>{hoTen.substr(0,20)}</Box>
@@ -110,13 +96,13 @@ const UserItem = (props) => {
           </CardContent>
 
           <Box className={props.classes.btnContent}>
-                <Button className={props.classes.btnIconEdit} color={"primary"} onClick={handleToggle}>
+                <Button className={props.classes.btnIconEdit} color={"primary"} onClick={handleToggle(taiKhoan)}>
             <InfoIcon className={props.classes.iconsize} />
           </Button>
-          <Button className={props.classes.btnIconEdit} color={"secondary"} onClick={handelEdit}>
+          <Button className={props.classes.btnIconEdit} color={"secondary"} onClick={handelEdit(props.item)}>
             <EditIcon className={props.classes.iconsize}/>
           </Button>
-          <Button className={props.classes.btnIconDelete} color="error" onClick={handelDelete}>
+          <Button className={props.classes.btnIconDelete} color="error" onClick={handelDelete(taiKhoan)}>
             <DeleteIcon className={props.classes.iconsize}/>
           </Button>
                 </Box>

@@ -30,6 +30,9 @@ const Home = (props) => {
   const modalUserDetail = useSelector((state)=>{
     return state.user.modalUserDetail;
   });
+  const activeArrow = useSelector((state)=>{
+    return state.active.active.arrow;
+  });
   useEffect(() => {
     dispatch(fetchMovie(currentPage,perToPage));
     dispatch(fetchUser(currentPage,perToPage));
@@ -39,10 +42,10 @@ const Home = (props) => {
   return (
     <div>
       <Box display={"flex"}>
-        <Box className={props.classes.left} width={"20%"}>
+        <Box className={ !activeArrow ? props.classes.left : props.classes.left2} >
           <SideBar />
         </Box>
-        <Box className={props.classes.right} width={"80%"}>
+        <Box className={!activeArrow ? props.classes.right : props.classes.right2}>
           {/* =====NAVBAR===== */}
           <NavBar />
 

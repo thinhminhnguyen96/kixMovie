@@ -16,6 +16,7 @@ import {
 } from "../../redux/action/type";
 
 const SideBar = (props) => {
+  const dispatch = useDispatch();
   const activeHome = useSelector((state) => {
     return state.active.active.home;
   });
@@ -28,7 +29,10 @@ const SideBar = (props) => {
   const activeCalendar = useSelector((state) => {
     return state.active.active.calendar;
   });
-  const dispatch = useDispatch();
+  const activeArrow = useSelector((state)=>{
+    return state.active.active.arrow;
+  });
+  
   const handelActiveHome = useCallback(() => {
     dispatch(createAction(SET_ACTIVE_HOME, true));
   }, [activeHome, dispatch]);
@@ -43,11 +47,11 @@ const SideBar = (props) => {
     dispatch(createAction(SET_ACTIVE_CALENDAR, true));
   }, [activeCalendar, dispatch]);
   return (
-    <div className={props.classes.backGround}>
+    <div className={ !activeArrow ? props.classes.backGround :  props.classes.backGround2 }>
       <Box>
         <Box className={props.classes.border}>
           <NavLink
-            className={props.classes.logo}
+            className={!activeArrow ? props.classes.logo : props.classes.logo2}
             to="/"
             onClick={handelActiveHome}
           >
@@ -55,32 +59,33 @@ const SideBar = (props) => {
           </NavLink>
         </Box>
         <NavLink
-          className={
-            !activeMovie ? props.classes.aDecoration : props.classes.active
-          }
+          className={`
+          ${!activeArrow ? (!activeMovie ? props.classes.aDecoration : props.classes.active) : (!activeMovie ? props.classes.aDecoration2 : props.classes.active2) }
+          `}
           to="/phim"
           onClick={handelActiveMovie}
         >
           <TheatersIcon className={props.classes.icon} />
-          Danh Sách Phim
+          <span>Danh Sách Phim</span>   
         </NavLink>
         <NavLink
-          className={
-            !activeUser ? props.classes.aDecoration : props.classes.active
-          }
+          className={`
+             
+              ${!activeArrow ? (!activeUser ? props.classes.aDecoration : props.classes.active) : (!activeUser ? props.classes.aDecoration2 : props.classes.active2) }
+          `}
           to="/nguoidung"
           onClick={handelActiveUser}
         >
-          <PersonIcon className={props.classes.icon} /> Người dùng
+          <PersonIcon className={props.classes.icon} /> <span>Người dùng</span>   
         </NavLink>
         <NavLink
-          className={
-            !activeCalendar ? props.classes.aDecoration : props.classes.active
-          }
+          className={`
+          ${!activeArrow ? (!activeCalendar ? props.classes.aDecoration : props.classes.active) : (!activeCalendar ? props.classes.aDecoration2 : props.classes.active2) }
+          `}
           to="/lichchieu"
           onClick={handelActiveCalendar}
         >
-          <DateRangeIcon className={props.classes.icon} /> Lịch Chiếu
+          <DateRangeIcon className={props.classes.icon} /> <span>Lịch Chiếu</span> 
         </NavLink>
       </Box>
     </div>

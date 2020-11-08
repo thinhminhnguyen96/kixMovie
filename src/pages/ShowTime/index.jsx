@@ -15,7 +15,7 @@ import {
   withTheme,
 } from "@material-ui/core";
 import styles from "./style";
-import React, { Fragment, memo,useMemo, useCallback, useState } from "react";
+import React, { Fragment, memo,useMemo, useCallback, useState, useEffect } from "react";
 import SideBar from "../../components/SideBar";
 import NavBar from "../../components/NavBar";
 import EqualizerIcon from "@material-ui/icons/Equalizer";
@@ -68,7 +68,15 @@ const ShowTime = (props) => {
   const modalUserDetail = useSelector((state)=>{
     return state.user.modalUserDetail;
   });
-  
+  const activeArrow = useSelector((state)=>{
+    return state.active.active.arrow;
+  });
+  // const [showTime,setShowTime] = useState({})
+  useEffect(()=>{
+    if(active){
+      dispatch(fetchShowTime(parseInt(search) ));
+    }
+  },[listShowTime,search])
   
   
   const {biDanh,
@@ -250,10 +258,10 @@ const ShowTime = (props) => {
     <div>
       <Box display={"flex"}>
         {/* SIDEBAR */}
-        <Box className={props.classes.left} width={"20%"}>
+        <Box className={ !activeArrow ? props.classes.left : props.classes.left2} >
           <SideBar />
         </Box>
-        <Box className={props.classes.right} width={"80%"}>
+        <Box className={!activeArrow ? props.classes.right : props.classes.right2}>
           {/* =====NAVBAR===== */}
           <NavBar />
 
@@ -359,7 +367,7 @@ const ShowTime = (props) => {
                 </Typography>
                 <Button className={props.classes.btnItem} onClick={handleToggle(true)}>
                   <AddIcon />
-                  Thêm Mới
+                  <p className={props.classes.btnItemText}>Thêm Mới</p> 
                 </Button>
               </Box>
 
@@ -395,7 +403,11 @@ const ShowTime = (props) => {
 
 
               <Grid container spacing={2}>
-                   {renderShowTime() }
+                   { listShowTime.length !== 0 ? renderShowTime() : 
+                   <Box marginLeft={"30%"} paddingBottom={"20px"}>
+                     <Typography component={"h4"} variant={"h4"} color={"error"} >Chưa có lịch chiếu</Typography>
+                   </Box>
+                   }
               </Grid>
             </Box>) }
               

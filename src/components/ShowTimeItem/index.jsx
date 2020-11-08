@@ -6,27 +6,8 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 
 const ShowTimeItem = (props) => {
-  const dispatch = useDispatch();
   const {hinhAnh,lichChieuPhim,maCumRap,tenCumRap}=props.lichChieu;
-  const [open,setOpen] = useState(false);
-  const handleOpen = useCallback(()=>{
-    setOpen(true);
-
-  },[]);
-
-  const handleClose = useCallback(()=>{
-    setOpen(false);
-  },[]);
-
-  const [expanded, setExpanded] = useState(false);
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
-  
-  
-  
-
+ 
   const renderLichChieu= useCallback(()=>{
     return lichChieuPhim.map((item,index)=>{
       const {giaVe,maLichChieu,maRap,ngayChieuGioChieu,tenRap,thoiLuong}=item;
@@ -57,29 +38,17 @@ const ShowTimeItem = (props) => {
         </AccordionDetails>
       </Accordion>
       
-          
-         
-
         </Grid>
-
-        
       )
-
-
-        
     })
-  },[lichChieuPhim,open])
+  },[lichChieuPhim])
 
 
   return (
     <Box>
-
-    <Grid container my={5} spacing={1}>
-    {renderLichChieu()}
+      <Grid container my={5} spacing={1}>
+      {renderLichChieu()}
     </Grid>
-    
-
-    
     </Box>
     )
 

@@ -8,10 +8,9 @@ import {
   withTheme,
 } from "@material-ui/core";
 import styles from "./style";
-import React, { Fragment, memo, useCallback, useEffect, useMemo, useState } from "react";
+import React, { Fragment, memo, useCallback, useEffect, useState } from "react";
 import SideBar from "../../components/SideBar";
 import NavBar from "../../components/NavBar";
-import EqualizerIcon from "@material-ui/icons/Equalizer";
 import AddIcon from "@material-ui/icons/Add";
 import { useDispatch, useSelector } from "react-redux";
 import { createAction } from "../../redux/action";
@@ -27,9 +26,6 @@ import SearchIcon from "@material-ui/icons/Search";
 import Loading from "../../Loading";
 import ModalUserDetail from "../../components/ModelUserDetail"
 
-
-
-// import  fetchMovie  from "../../redux/action/movie";
 
 const UserList = (props) => {
   //Dispatch
@@ -61,6 +57,9 @@ const UserList = (props) => {
   })
   const modalUserDetail = useSelector((state)=>{
     return state.user.modalUserDetail;
+  });
+  const activeArrow = useSelector((state)=>{
+    return state.active.active.arrow;
   });
   
   useEffect(() => {
@@ -108,7 +107,7 @@ const UserList = (props) => {
   },[])
   const getSearch = useCallback(()=>{
     setCurrentPage(1);
-    dispatch(searchUser(search,currentPage,8));
+    dispatch(searchUser(search,currentPage,perToPage));
     
   },[search,currentPage]);
   
@@ -118,10 +117,10 @@ const UserList = (props) => {
       {loading? <Loading/> : <div>
       <Box display={"flex"}>
         {/* SIDEBAR */}
-        <Box className={props.classes.left} width={"20%"}>
+        <Box className={ !activeArrow ? props.classes.left : props.classes.left2} >
           <SideBar />
         </Box>
-        <Box className={props.classes.right} width={"80%"}>
+        <Box className={!activeArrow ? props.classes.right : props.classes.right2}>
           {/* =====NAVBAR===== */}
           <NavBar />
 
@@ -228,7 +227,7 @@ const UserList = (props) => {
                 </Typography>
                 <Button className={props.classes.btnItem} onClick={handleOpen}>
                   <AddIcon />
-                  Thêm Mới
+                  <p className={props.classes.btnItemText}>Thêm Mới</p> 
                 </Button>
               </Box>
 

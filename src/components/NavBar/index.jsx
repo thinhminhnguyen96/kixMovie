@@ -3,8 +3,6 @@ import {
   Button,
   Menu,
   MenuItem,
-  TextField,
-  Typography,
   withStyles,
   withTheme,
 } from "@material-ui/core";
@@ -12,12 +10,15 @@ import styles from "./style";
 import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
 import React, { useCallback, useState } from "react";
-import { AccountBox } from "@material-ui/icons";
 import login from "../../asset/images/user.png";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { detailUser } from "../../redux/action/userAction";
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import { createAction } from "../../redux/action";
+import { HIDE_ACTIVE_ARROW, SET_ACTIVE_ARROW } from "../../redux/action/type";
 
 const NavBar = (props) => {
   const dispatch = useDispatch();
@@ -25,9 +26,18 @@ const NavBar = (props) => {
   const credentials = useSelector((state) => {
     return state.credentials.credentialsA;
   });
+  const activeArrow = useSelector((state)=>{
+    return state.active.active.arrow;
+  });
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+  const handelOpenArrow = useCallback(()=>{
+    dispatch(createAction(SET_ACTIVE_ARROW,{}))
+  },[])
+  const handelCloseArrow = useCallback(()=>{
+    dispatch(createAction(HIDE_ACTIVE_ARROW,{}))
+  },[])
 
   const handleClose = useCallback(() => {
     setAnchorEl(null);
@@ -45,18 +55,8 @@ const NavBar = (props) => {
 
   return (
     <Box className={props.classes.backGround}>
-      <Box className={props.classes.search}>
-        <Box className={props.classes.searchIcon}>
-          <SearchIcon />
-        </Box>
-        <InputBase
-          placeholder="Search…"
-          classes={{
-            root: props.classes.inputRoot,
-            input: props.classes.inputInput,
-          }}
-          // inputProps={{ "aria-label": "search" }}
-        />
+      <Box className={props.classes.arrowTop}>
+        { activeArrow ? <Button onClick={handelCloseArrow} className={props.classes.arrowIcon}><ArrowForwardIosIcon/></Button>  : <Button onClick={handelOpenArrow} className={props.classes.arrowIcon}><ArrowBackIosIcon/></Button>}
       </Box>
       <Box className={props.classes.login}>
         <Box paddingTop={"8px"}>{credentials.hoTen}</Box>

@@ -1,4 +1,6 @@
 import {
+  HIDE_ACTIVE_ARROW,
+  SET_ACTIVE_ARROW,
   SET_ACTIVE_CALENDAR,
   SET_ACTIVE_HOME,
   SET_ACTIVE_MOVIE,
@@ -11,6 +13,7 @@ let initialState = {
     movie: false,
     user: false,
     calendar: false,
+    arrow:false,
   },
 };
 
@@ -36,8 +39,13 @@ const reducer = (state = initialState, { type, payload }) => {
       state.active.calendar = false;
       state.active.user = false;
       state.active.movie = false;
-
       return { ...state };
+      case SET_ACTIVE_ARROW:
+      state.active.arrow = true;
+      return {...state}
+      case HIDE_ACTIVE_ARROW:
+      state.active.arrow = false;
+      return {...state}
     default:
       return state;
   }

@@ -4,15 +4,46 @@ const style = (theme) => {
       height: "100%",
       color: "#22D1EE",
       position: "fixed",
+      width:"20%",
     },
     right: {
       color: "#43425D",
       backgroundColor: "#dee1ec",
       marginLeft: "20%",
+      width:"80%",
+    },
+    left2: {
+      height: "100%",
+      color: "#22D1EE",
+      position: "fixed",
+      width:"5%",
+      [theme.breakpoints.down(900)]:{
+        width:"10%",
+      },
+      [theme.breakpoints.down(550)]:{
+        width:0,
+      }
+    },
+    right2: {
+      color: "#43425D",
+      backgroundColor: "#dee1ec",
+      marginLeft: "5%",
+      width:"100%",
+      [theme.breakpoints.down(900)]:{
+        marginLeft: "10%",
+      },
+      [theme.breakpoints.down(550)]:{
+        marginLeft: 0,
+      }
     },
     content: {
-      position: "relative",
       padding: theme.spacing(4, 6),
+      [theme.breakpoints.down(900)]:{
+        padding: theme.spacing(3, 4),
+      },
+      [theme.breakpoints.down(550)]:{
+        padding: theme.spacing(2, 3),
+      }
     },
     contentItem: {},
     item: {
@@ -50,6 +81,20 @@ const style = (theme) => {
         backgroundColor: "#43425D",
         color: "#22D1EE",
       },
+      '& p':{
+        display:"inline-block",
+        marginBlockStart:0,
+        marginBlockEnd:0,
+      },
+      [theme.breakpoints.down(550)]:{
+      '& p':{
+        display:'none',
+      '& .MuiButton-root':{
+          minWidth:0
+        }
+      },
+      
+    }
     },
     table: {
       marginTop: theme.spacing(5),
