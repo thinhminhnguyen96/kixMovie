@@ -84,17 +84,18 @@ const style = (theme) => {
         color: "#22D1EE",
       },
       '& p':{
-          display:"inline-block",
-          marginBlockStart:0,
-          marginBlockEnd:0,
+        display:"inline-block",
+        marginBlockStart:0,
+        marginBlockEnd:0,
       },
       [theme.breakpoints.down(550)]:{
-        '& p':{
-          display:'none',
-        },
-        '& .MuiButton-root':{
+      '& p':{
+        display:'none',
+      '& .MuiButton-root':{
           minWidth:0
         }
+      },
+      
       }
     },
     table: {
@@ -115,6 +116,13 @@ const style = (theme) => {
       display:"flex",
       justifyContent: 'between',
       position: 'relative',
+      [theme.breakpoints.down(550)]:{
+        '& h3':{
+          display:'none',
+        },
+        marginBottom:100,
+        
+        }
     },
 
     search: {
@@ -133,6 +141,11 @@ const style = (theme) => {
         marginLeft: theme.spacing(3),
         
       },
+      [theme.breakpoints.down(550)]:{
+        
+        width: '60%',
+        
+        }
     },
     searchbtn:{
       position: 'absolute',

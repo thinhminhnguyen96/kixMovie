@@ -94,7 +94,7 @@ const style = (theme) => {
         }
       },
       
-    }
+      }
     },
     table: {
       marginTop: theme.spacing(5),

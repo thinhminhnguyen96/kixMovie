@@ -135,15 +135,16 @@ const style = (theme) => {
         display:"inline-block",
         marginBlockStart:0,
         marginBlockEnd:0,
-    },
-    [theme.breakpoints.down(550)]:{
+      },
+      [theme.breakpoints.down(550)]:{
       '& p':{
         display:'none',
       '& .MuiButton-root':{
           minWidth:0
         }
+      },
+      
       }
-    }
     },
     table: {
       marginTop: theme.spacing(5),
@@ -163,6 +164,13 @@ const style = (theme) => {
       display:"flex",
       justifyContent: 'between',
       position: 'relative',
+      [theme.breakpoints.down(550)]:{
+        '& h3':{
+          display:'none',
+        },
+        marginBottom:100,
+        
+        }
     },
 
     search: {
@@ -181,6 +189,11 @@ const style = (theme) => {
         marginLeft: theme.spacing(3),
         
       },
+      [theme.breakpoints.down(550)]:{
+        
+        width: '60%',
+        
+        }
     },
     searchbtn:{
       position: 'absolute',

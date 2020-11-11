@@ -32,6 +32,12 @@ const style = (theme) => {
       padding: theme.spacing(1.3, 3),
       backgroundColor: "#0e153a",
       boxShadow: "",
+      [theme.breakpoints.down(550)]: {
+        padding: theme.spacing(1.3, 2),
+      },
+      [theme.breakpoints.down(350)]: {
+        padding: theme.spacing(1.3, 1),
+      },
     },
     logo2: {
       textDecoration: "none",
@@ -39,6 +45,7 @@ const style = (theme) => {
       padding: theme.spacing(1.3, 1.4),
       backgroundColor: "#0e153a",
       boxShadow: "",
+      
     },
     aDecoration: {
       textDecoration: "none",
@@ -49,11 +56,12 @@ const style = (theme) => {
         backgroundColor: "#43425D",
       },
       [theme.breakpoints.down(550)]: {
-        padding: theme.spacing(2, 3),
         '& span':{
           display:"none",
-        }
-        
+        },
+      },
+      [theme.breakpoints.down(350)]: {
+        padding: theme.spacing(2, 1.5),
       },
       
     },
@@ -66,8 +74,10 @@ const style = (theme) => {
       [theme.breakpoints.down(550)]: {
         '& span':{
           display:"none",
-        }
-        
+        },
+      },
+      [theme.breakpoints.down(350)]: {
+        padding: theme.spacing(2, 1.5),
       },
     },
     aDecoration2: {

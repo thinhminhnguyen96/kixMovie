@@ -63,7 +63,7 @@ const UserList = (props) => {
   });
   
   useEffect(() => {
-    if( searchActive && search!=="" && listUserSearch!==null){  
+    if( searchActive && search!=="" ){  
       dispatch(searchUser(search,currentPage,perToPage));
     }else{
       dispatch(fetchUser(currentPage,perToPage));
@@ -101,14 +101,26 @@ const UserList = (props) => {
     });
   }, [list]);
 
+  // const renderUserSearch = useCallback(() => {
+  //   return listUserSearch.map((item, index) => {
+  //     return (
+  //       <Grid item md={6} xs={12} key={index}>
+  //         <UserItem item={item}  />
+  //       </Grid>
+  //     );
+  //   });
+  // }, [listUserSearch]);
+
   const handelSearch = useCallback((e)=>{ 
     setSearch(e.target.value)
     
   },[])
   const getSearch = useCallback(()=>{
     setCurrentPage(1);
-    dispatch(searchUser(search,currentPage,perToPage));
-    
+    if(search !== ""){
+      dispatch(searchUser(search,currentPage,perToPage));
+    }
+  
   },[search,currentPage]);
   
 
@@ -172,6 +184,7 @@ const UserList = (props) => {
                   </Box>
                   <Box paddingLeft={"20px"}>
                     <Typography variant="h6" component="h5">
+                      {/* {!searchActive ? listUser.length : listUserSearch.length} */}
                       {list.length}
                     </Typography>
                     <Typography>Người dùng / Trang</Typography>
@@ -240,6 +253,7 @@ const UserList = (props) => {
               <Box>
               <Box className={props.classes.table}>
                 <Grid container spacing={2}>
+                  {/* {!searchActive ? renderUser() : renderUserSearch()} */}
                   {renderUser()}
                 </Grid>
               </Box>

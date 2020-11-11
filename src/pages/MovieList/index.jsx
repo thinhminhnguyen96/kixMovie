@@ -59,7 +59,7 @@ const MovieList = (props) => {
 
   useEffect(() => {
     dispatch(fetchMovie(currentPage,perToPage));
-  }, [dispatch,currentPage,listMovie]);
+  }, [currentPage,listMovie]);
   //ShowModal
   const handleOpen = useCallback(()=>{
     dispatch(createAction(SHOW_MODALMOVIE,{movies:{biDanh: "",
@@ -79,7 +79,7 @@ const MovieList = (props) => {
     return listMovie.map((item, index) => {
      
       return (
-        <Grid item md={3} key={index}>
+        <Grid item md={3} sm={6} xs={12} key={index}>
           <MovieItem item={item}  />
         </Grid>
       );
