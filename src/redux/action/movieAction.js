@@ -1,7 +1,7 @@
 import { createAction } from ".";
 import connector from "../../configs/connector";
 import {MovieService} from "../../services/index"
-import { SET_MOVIE } from "./type";
+import { EDIT_MOVIE, SET_MOVIE } from "./type";
 import swal from "sweetalert"
 
 export const fetchMovie = (soTrang,soPhanTuTrang) => {
@@ -16,13 +16,14 @@ export const fetchMovie = (soTrang,soPhanTuTrang) => {
 
 export const editMovie = (data) =>{
   return dispatch => {
-    MovieService.editMovieService(data).then(()=>{
+    MovieService.editMovieService(data).then((res)=>{
       swal({
         title: "Chỉnh sửa Thành công!",
         text: `Chúc mừng bạn đã chỉnh sửa phim thành công !`,
         icon: "success",
     })
-      console.log("Edit Thành Công")
+      // console.log(res.data);
+      dispatch(createAction(EDIT_MOVIE,res.data));
     }).catch(err=>{
       swal({
         title: "Chỉnh sửa Thất bại!",
@@ -36,13 +37,14 @@ export const editMovie = (data) =>{
 
 export const editMovieNoneImg = (data) =>{
   return dispatch => {
-    MovieService.editMovieServiceNoneImg(data).then(()=>{
+    MovieService.editMovieServiceNoneImg(data).then((res)=>{
       swal({
         title: "Chỉnh sửa Thành công!",
         text: `Chúc mừng bạn đã chỉnh sửa phim thành công !`,
         icon: "success",
     })
-      console.log("Edit Thành Công")
+      // console.log(res.data);
+      dispatch(createAction(EDIT_MOVIE,res.data));
     }).catch(err=>{
       swal({
         title: "Chỉnh sửa Thất bại!",

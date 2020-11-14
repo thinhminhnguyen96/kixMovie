@@ -10,7 +10,7 @@ import { createAction } from '../../redux/action';
 import {  HIDE_MODALMOVIE } from '../../redux/action/type';
 import Backdrop from "@material-ui/core/Backdrop";
 import EditIcon from "@material-ui/icons/Edit";
-import {editMovie,addMovie} from "../../redux/action/movieAction";
+import {editMovie,addMovie, editMovieNoneImg} from "../../redux/action/movieAction";
 
 
 const ModalMovie = (props) => {
@@ -78,7 +78,13 @@ const ModalMovie = (props) => {
 
         form_data.append(key,state.movies[key]);
       } 
-      {role === 1 ? dispatch(addMovie(form_data)) : dispatch(editMovie(form_data))}
+      if(moviea.hinhAnh===state.movies.hinhAnh){
+        console.log('chinh sua thong tin');
+      }else{
+        console.log('thay doi hinh anh');
+      }
+      // dispatch(moviea.hinhAnh===state.movies.hinhAnh?editMovieNoneImg(state.movies):editMovie(form_data));
+      {role === 1 ? dispatch(addMovie(form_data)) : dispatch(moviea.hinhAnh===state.movies.hinhAnh?editMovieNoneImg(state.movies):editMovie(form_data))}
       dispatch(createAction(HIDE_MODALMOVIE));
       
       

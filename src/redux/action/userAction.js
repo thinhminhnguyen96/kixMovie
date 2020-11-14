@@ -71,7 +71,7 @@ export const searchUser = (taiKhoan,soTrang,soPhanTuTrang) =>{
   return dispatch => {
     UserService.searchUserService(taiKhoan,soTrang,soPhanTuTrang).then((res)=>{
       dispatch(createAction(SET_USERSEARCH,res.data));
-     
+      // callback();
     }).catch(err=>{
       console.log("Search Thất Bại");
     })

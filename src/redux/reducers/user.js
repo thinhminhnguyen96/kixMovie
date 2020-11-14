@@ -6,6 +6,9 @@ let initialState = {
   userList: [],
   totalCount:0,
   totalPages:0,
+  // totalCountSearch:0,
+  // totalPagesSearch:0,
+  // nameSearch:"",
   modalUserDetail:false,
   detail:[],
   detailBook:[],
@@ -22,8 +25,9 @@ const reducer = (state = initialState, { type, payload }) => {
       state.totalPages = payload.totalPages;
       return { ...state };
       case SET_USERSEARCH:{
-        
+        console.log(payload)
         state.searchActive=true;
+       
         state.userListSearch = payload.items;
         state.totalCount = payload.totalCount;
         state.totalPages = payload.totalPages;

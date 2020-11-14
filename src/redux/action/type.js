@@ -11,6 +11,7 @@ export const HIDE_ACTIVE_ARROW = "active/HIDE_ACTIVE_ARROW";
 
 export const SET_MOVIE = "movie/SET_MOVIE";
 export const ADD_MOVIE = "movie/ADD_MOVIE";
+export const EDIT_MOVIE= "movie/EDIT_MOVIE";
 export const SET_USER = "user/SET_USER";
 
 export const SHOW_MODALMOVIE = "modalActive/SHOW_MODALMOVIE";

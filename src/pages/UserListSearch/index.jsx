@@ -15,7 +15,7 @@ import AddIcon from "@material-ui/icons/Add";
 import { useDispatch, useSelector } from "react-redux";
 import { createAction } from "../../redux/action";
 import {   SHOW_MODALUSER } from "../../redux/action/type";
-import { fetchUser, searchUser, testApi } from "../../redux/action/userAction";
+import { fetchUser, searchUser } from "../../redux/action/userAction";
 import UserItem from "../../components/UserItem";
 import ModalUser from "../../components/ModalUser";
 import { Pagination } from "@material-ui/lab";
@@ -27,27 +27,28 @@ import Loading from "../../Loading";
 import ModalUserDetail from "../../components/ModelUserDetail"
 
 
-const UserList = (props) => {
+const UserListSearch = (props) => {
   //Dispatch
   const perToPage = 8;
   const [currentPage, setCurrentPage] = useState(1);
-  const [search,setSearch] = useState("");
+  
   const dispatch = useDispatch();
   
-  const listUser = useSelector((state) => {
-    return state.user.userList;
+  const nameSearch = useSelector((state) => {
+    return state.user.nameSearch;
   });
+  const [search,setSearch] = useState(nameSearch);
   const listUserSearch = useSelector((state) => {
     return state.user.userListSearch;
   });
   const searchActive = useSelector((state) => {
     return state.user.searchActive;
   }); 
-  const totalCount = useSelector((state) => {
-    return state.user.totalCount;
+  const totalCountSearch = useSelector((state) => {
+    return state.user.totalCountSearch;
   });
-  const totalPages = useSelector((state) => {
-    return state.user.totalPages;
+  const totalPagesSearch = useSelector((state) => {
+    return state.user.totalPagesSearch;
   });
   const modalUser = useSelector((state) => {
     return state.modalUsers.modalUser;
@@ -63,15 +64,19 @@ const UserList = (props) => {
   });
   
   useEffect(() => {
-    if(searchActive && search !== ""){
-      dispatch(searchUser(search,currentPage,perToPage));
+    if( search !== "" ){  
+      dispatch(searchUser(search,currentPage,perToPage,()=>{
+        props.history.replace(`/nguoidung/${search}`);
+      }));
     }else{
-      dispatch(fetchUser(currentPage,perToPage));
+      dispatch(searchUser(nameSearch,currentPage,perToPage,()=>{
+        props.history.replace(`/nguoidung/${nameSearch}`);
+      }));
     }
-      
-  }, [searchActive,currentPage,listUserSearch]);
+  }, [searchActive,search,currentPage,listUserSearch,nameSearch]);
    
   const handleChange = useCallback((event, value) => {
+    console.log(value);
     setCurrentPage(value);
   },[]);
   //ShowModal
@@ -90,16 +95,16 @@ const UserList = (props) => {
     
 
   //renderuser
-  const list = searchActive ? listUserSearch : listUser;
-  const renderUser = useCallback(() => {
-    return list.map((item, index) => {
+  
+  const renderUserSearch = useCallback(() => {
+    return listUserSearch.map((item, index) => {
       return (
         <Grid item md={6} xs={12} key={index}>
           <UserItem item={item}  />
         </Grid>
       );
     });
-  }, [list]);
+  }, [listUserSearch]);
 
   // const renderUserSearch = useCallback(() => {
   //   return listUserSearch.map((item, index) => {
@@ -117,7 +122,9 @@ const UserList = (props) => {
   },[])
   const getSearch = useCallback(()=>{
     setCurrentPage(1);
-      dispatch(searchUser(search,currentPage,perToPage));
+      dispatch(searchUser(search,currentPage,perToPage,()=>{
+        props.history.replace(`/nguoidung/${search}`);
+      }));
   },[search,currentPage]);
   
 
@@ -138,7 +145,7 @@ const UserList = (props) => {
 
             <Box className={props.classes.headersearch}>
               <Box component="h3" variant="h5" paddingBottom={"20px"}>
-              Danh Sách Người Dùng
+              Tìm Kiếm Người Dùng
              </Box>
 
               <Box>
@@ -182,7 +189,7 @@ const UserList = (props) => {
                   <Box paddingLeft={"20px"}>
                     <Typography variant="h6" component="h5">
                       {/* {!searchActive ? listUser.length : listUserSearch.length} */}
-                      {list.length}
+                      {listUserSearch.length}
                     </Typography>
                     <Typography>Người dùng / Trang</Typography>
                   </Box>
@@ -220,7 +227,7 @@ const UserList = (props) => {
                   </Box>
                   <Box paddingLeft={"20px"}>
                     <Typography variant="h6" component="h5">
-                      {totalCount}
+                      {totalCountSearch}
                     </Typography>
                     <Typography>Tổng số người dùng</Typography>
                   </Box>
@@ -251,12 +258,14 @@ const UserList = (props) => {
               <Box className={props.classes.table}>
                 <Grid container spacing={2}>
                   {/* {!searchActive ? renderUser() : renderUserSearch()} */}
-                  {renderUser()}
+                  {search !== "" && listUserSearch !== null ? renderUserSearch() : <Box>
+                      Không tìm thấy
+                    </Box>}
                 </Grid>
               </Box>
 
               <Box  className={props.classes.pagination}>
-              <Pagination count={totalPages} page={currentPage} variant="outlined" color="secondary" onChange={handleChange} />
+              <Pagination count={totalPagesSearch} page={currentPage} variant="outlined" color="secondary" onChange={handleChange} />
               </Box>
                 
               </Box>
@@ -275,4 +284,4 @@ const UserList = (props) => {
   );
 };
 
-export default memo(withStyles(styles, { withTheme: true })(UserList));
+export default memo(withStyles(styles, { withTheme: true })(UserListSearch));

@@ -59,7 +59,7 @@ const MovieList = (props) => {
 
   useEffect(() => {
     dispatch(fetchMovie(currentPage,perToPage));
-  }, [currentPage,listMovie]);
+  }, [currentPage]);
   //ShowModal
   const handleOpen = useCallback(()=>{
     dispatch(createAction(SHOW_MODALMOVIE,{movies:{biDanh: "",
