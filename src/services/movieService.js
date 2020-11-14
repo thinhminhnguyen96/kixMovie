@@ -1,21 +1,21 @@
 import createConnector from "../configs/connector"
 
 
-class MovieService{
+class MovieService {
 
   maNhom = 'GP01';
   url = 'https://movie0706.cybersoft.edu.vn/api/QuanLyPhim';
   //Get movie
-  getAllMovieService = (soTrang,soPhanTuTrang) =>{
-  return createConnector({
-    method:"GET",
-    url: `${this.url}/LayDanhSachPhimPhanTrang?maNhom=${this.maNhom}&soTrang=${soTrang}&soPhanTuTrenTrang=${soPhanTuTrang}`
+  getAllMovieService = (soTrang, soPhanTuTrang) => {
+    return createConnector({
+      method: "GET",
+      url: `${this.url}/LayDanhSachPhimPhanTrang?maNhom=${this.maNhom}&soTrang=${soTrang}&soPhanTuTrenTrang=${soPhanTuTrang}`
 
-  });
+    });
   }
 
   //Edit Moive
-  editMovieService = (data)=>{
+  editMovieService = (data) => {
     return createConnector({
       method: "POST",
       url: `${this.url}/CapNhatPhimUpload`,
@@ -23,7 +23,7 @@ class MovieService{
     })
   }
 
-  editMovieServiceNoneImg = (data)=>{
+  editMovieServiceNoneImg = (data) => {
     return createConnector({
       method: "POST",
       url: `${this.url}/CapNhatPhim`,
@@ -33,33 +33,34 @@ class MovieService{
 
 
 
- //ADD Moive
- addMovieService = (data)=>{
-  console.log(data);
-  return createConnector({
-    method: "POST",
-    url: `${this.url}/ThemPhimUploadHinh`,
-    data: data,
-  })
+  //ADD Moive
+  addMovieService = (data) => {
+    console.log(data);
+    return createConnector({
+      method: "POST",
+      url: `${this.url}/ThemPhimUploadHinh`,
+      data: data,
+    })
   }
 
   //Delete Moive
- deleteMovieService = (id)=>{
-  return createConnector({
-    method: "DELETE",
-    url: `${this.url}/XoaPhim?MaPhim=${id}`,
-    
-  })
+  deleteMovieService = (id) => {
+    console.log(id);
+    return createConnector({
+      method: "DELETE",
+      url: `${this.url}/XoaPhim?MaPhim=${id}`,
+
+    })
   }
 
-  detailMovieService = (id)=>{
+  detailMovieService = (id) => {
     console.log(id)
-   return createConnector({
-     method: "GET",
-     url: `${this.url}/LayThongTinPhim?MaPhim=${id}`,
-     
-   })
-   }
+    return createConnector({
+      method: "GET",
+      url: `${this.url}/LayThongTinPhim?MaPhim=${id}`,
+
+    })
+  }
 
 
 

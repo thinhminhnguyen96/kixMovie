@@ -12,9 +12,10 @@ import {
   Typography,
   withStyles,
   withTheme,
+  Paper
 } from "@material-ui/core";
 import styles from "./style";
-import React, {  useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Backdrop from "@material-ui/core/Backdrop";
@@ -23,7 +24,7 @@ import { useDispatch } from "react-redux";
 import { useCallback } from "react";
 import { SHOW_MODALMOVIE } from "../../redux/action/type";
 import { createAction } from "../../redux/action";
-import {deleteMovie, detailMovie} from "../../redux/action/movieAction";
+import { deleteMovie, detailMovie, fetchMovie } from "../../redux/action/movieAction";
 import swal from "sweetalert";
 import { fetchShowTime } from "../../redux/action/showTimeAction";
 import InfoIcon from '@material-ui/icons/Info';
@@ -41,65 +42,72 @@ const MovieItem = (props) => {
     ngayKhoiChieu,
     tenPhim,
     trailer,
-  } = useMemo(()=>{
-   return props.item
-  },[props.item]);
+  } = useMemo(() => {
+    return props.item
+  }, [props.item]);
   const date = new Date(ngayKhoiChieu);
   const [open, setOpen] = useState(false);
   const [openTrailer, setOpenTrailer] = useState(false);
   const dispatch = useDispatch();
-  
-  const handleToggle = useCallback((value) =>()=> {
+
+  const handleToggle = useCallback((value) => () => {
     setOpen(value);
     dispatch(detailMovie(maPhim))
-  },[maPhim]); 
+  }, [maPhim]);
 
-  const handleToggleTrailer = useCallback((value) =>()=> {
+  const handleToggleTrailer = useCallback((value) => () => {
     setOpenTrailer(value);
-  },[props.item]); 
+  }, [props.item]);
 
-  const getDetail = useCallback(()=>{
+  const getDetail = useCallback(() => {
     dispatch(fetchShowTime(maPhim));
-  },[maPhim]);
- 
-  const handelEdit = useCallback ((value)=>()=>{
-    dispatch(createAction(SHOW_MODALMOVIE,{movies:value,
-    role:2 }))
-    
-  },[props.item]);
+  }, [maPhim]);
 
-  const handelDelete = useCallback((maPhim)=>()=>{
+  const handelEdit = useCallback((value) => () => {
+    dispatch(createAction(SHOW_MODALMOVIE, {
+      movies: value,
+      role: 2
+    }))
+
+  }, [props.item]);
+
+  const handelDelete = useCallback((maPhim) => () => {
     swal({
       title: "Bạn chắc chứ?",
       text: "Bạn có muốn xóa phim này không!",
       icon: "warning",
       buttons: true,
       dangerMode: true,
-  })
+    })
       .then((willDelete) => {
-          if (willDelete) {
-              swal("Phim đã được xóa !", {
-                  icon: "success",
-              });
-              // setIsChoosed(false);
-              dispatch(deleteMovie(maPhim))
-          } else {
-              swal("Bạn thật sáng suốt!");
-          }
+        if (willDelete) {
+          dispatch(deleteMovie(maPhim, () => {
+            swal("Phim đã được xóa !", {
+              icon: "success",
+            });
+            // dispatch(fetchMovie(currentPage, perToPage));
+          }, () => {
+            swal("Lỗi !!", {
+              icon: "info",
+            });
+          }));
+        } else {
+          swal("Bạn thật sáng suốt!");
+        }
       });
 
 
-    
-  },[props.item])
 
- 
+  }, [props.item])
+
+
   return (
-    <div>
+    <Paper>
       <Card className={props.classes.root}>
         <CardActionArea className={props.classes.cardHover}>
           <CardMedia
             component="img"
-            alt="Contemplative Reptile"
+            alt={hinhAnh}
             height="240px"
             image={hinhAnh}
             title="Contemplative Reptile"
@@ -111,19 +119,19 @@ const MovieItem = (props) => {
                 {tenPhim.substr(0, 14)}
               </Typography>
             </Box>
-            
+
           </CardContent>
           <Box className={props.classes.cardAbove} >
             <Box >
-              <Button onClick={handleToggleTrailer(true)}>
-                <PlayArrowIcon className={props.classes.cardAboveIcons}/>
-                </Button> 
+              <Button type="button" onClick={handleToggleTrailer(true)}>
+                <PlayArrowIcon className={props.classes.cardAboveIcons} />
+              </Button>
             </Box>
           </Box>
         </CardActionArea>
-        <CardActions style={{textAlign:"center",display:"block"}}>
+        <CardActions style={{ textAlign: "center", display: "block" }}>
           <Button className={props.classes.btnIconEdit} color={"primary"} onClick={handleToggle(true)}>
-            <InfoIcon/>
+            <InfoIcon />
           </Button>
           <Button className={props.classes.btnIconEdit} color={"secondary"} onClick={handelEdit(props.item)}>
             <EditIcon />
@@ -154,25 +162,25 @@ const MovieItem = (props) => {
               <Grid item xs={12} md={4}>
                 <img
                   src={hinhAnh}
-                  alt="1"
+                  alt={hinhAnh}
                   style={{ height: "400px", width: "100%" }}
                 />
               </Grid>
               <Grid item xs={12} md={8} className={props.classes.paperRigth}>
-              <span><p className={props.classes.name}>Mã Nhóm : </p> {maNhom}</span> <br/>
-              <span><p className={props.classes.name}>Mã Phim : </p> {maPhim}</span> <br/>
-              <span><p className={props.classes.name}>Bí Danh : </p> {biDanh}</span> <br/>
-                <span><p className={props.classes.name}>Ngày Khởi Chiếu : </p> {`${(date.getDate() >= 10? date.getDate() : "0"+date.getDate()) +"/"+ (date.getMonth() >= 10? date.getMonth() : "0"+date.getMonth())+"/" + date.getFullYear() + " " + (date.getHours() >= 10 ? date.getHours() : "0"+ date.getHours()) +":"+ (date.getMinutes() >= 10 ? date.getMinutes() : "0"+ date.getMinutes())}`}</span> <br/>
-                <span><p className={props.classes.name}>Mô Tả : </p> {moTa.substr(0,150)}</span> <br/>
-                <span><p className={props.classes.name}>Đánh Giá : </p> {danhGia}</span> <br/>
-                <br/><br/>
-                <Link to="/lichchieu" style={{textDecoration:"none"}}> <Button className={props.classes.btn} onClick={getDetail}> Xem lịch chiếu</Button></Link>
+                <span><p className={props.classes.name}>Mã Nhóm : </p> {maNhom}</span> <br />
+                <span><p className={props.classes.name}>Mã Phim : </p> {maPhim}</span> <br />
+                <span><p className={props.classes.name}>Bí Danh : </p> {biDanh}</span> <br />
+                <span><p className={props.classes.name}>Ngày Khởi Chiếu : </p> {`${(date.getDate() >= 10 ? date.getDate() : "0" + date.getDate()) + "/" + (date.getMonth() >= 10 ? date.getMonth() : "0" + date.getMonth()) + "/" + date.getFullYear() + " " + (date.getHours() >= 10 ? date.getHours() : "0" + date.getHours()) + ":" + (date.getMinutes() >= 10 ? date.getMinutes() : "0" + date.getMinutes())}`}</span> <br />
+                <span><p className={props.classes.name}>Mô Tả : </p> {moTa.substr(0, 150)}</span> <br />
+                <span><p className={props.classes.name}>Đánh Giá : </p> {danhGia}</span> <br />
+                <br /><br />
+                <Link to="/lichchieu" style={{ textDecoration: "none" }}> <Button className={props.classes.btn} onClick={getDetail}> Xem lịch chiếu</Button></Link>
               </Grid>
             </Grid>
           </div>
         </Fade>
       </Modal>
-        {/* MODAL TRAILER */}
+      {/* MODAL TRAILER */}
       <Modal
         aria-labelledby="transition-modal-trailer"
         aria-describedby="transition-modal-trailer-description"
@@ -189,18 +197,18 @@ const MovieItem = (props) => {
           <div className={props.classes.paperTrailer}>
             <Box justifyContent={"space-between"} display={"flex"}>
               <h2>{tenPhim}</h2>
-              <Button onClick={handleToggleTrailer(false)}><CloseIcon/></Button>
+              <Button onClick={handleToggleTrailer(false)}><CloseIcon /></Button>
             </Box>
             <Grid container>
               <Grid item xs={12} >
-              <iframe width="560" height="315" src={trailer} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe width="560" height="315" src={trailer} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
               </Grid>
-              
+
             </Grid>
           </div>
         </Fade>
       </Modal>
-    </div>
+    </Paper>
   );
 };
 
