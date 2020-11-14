@@ -14,7 +14,7 @@ import NavBar from "../../components/NavBar";
 import AddIcon from "@material-ui/icons/Add";
 import { useDispatch, useSelector } from "react-redux";
 import { createAction } from "../../redux/action";
-import {   SHOW_MODALUSER } from "../../redux/action/type";
+import { SHOW_MODALUSER } from "../../redux/action/type";
 import { fetchUser, searchUser, testApi } from "../../redux/action/userAction";
 import UserItem from "../../components/UserItem";
 import ModalUser from "../../components/ModalUser";
@@ -31,9 +31,9 @@ const UserList = (props) => {
   //Dispatch
   const perToPage = 8;
   const [currentPage, setCurrentPage] = useState(1);
-  const [search,setSearch] = useState("");
+  const [search, setSearch] = useState("");
   const dispatch = useDispatch();
-  
+
   const listUser = useSelector((state) => {
     return state.user.userList;
   });
@@ -42,7 +42,7 @@ const UserList = (props) => {
   });
   const searchActive = useSelector((state) => {
     return state.user.searchActive;
-  }); 
+  });
   const totalCount = useSelector((state) => {
     return state.user.totalCount;
   });
@@ -52,42 +52,43 @@ const UserList = (props) => {
   const modalUser = useSelector((state) => {
     return state.modalUsers.modalUser;
   });
-  const loading = useSelector((state)=>{
+  const loading = useSelector((state) => {
     return state.user.loading
   })
-  const modalUserDetail = useSelector((state)=>{
+  const modalUserDetail = useSelector((state) => {
     return state.user.modalUserDetail;
   });
-  const activeArrow = useSelector((state)=>{
+  const activeArrow = useSelector((state) => {
     return state.active.active.arrow;
   });
-  
+
   useEffect(() => {
-    if(searchActive && search !== ""){
-      dispatch(searchUser(search,currentPage,perToPage));
-    }else{
-      dispatch(fetchUser(currentPage,perToPage));
+    if (searchActive && search !== "") {
+      dispatch(searchUser(search, currentPage, perToPage));
+    } else {
+      dispatch(fetchUser(currentPage, perToPage));
     }
-      
-  }, [searchActive,currentPage,listUserSearch]);
-   
+
+  }, [searchActive, currentPage]);
+
   const handleChange = useCallback((event, value) => {
     setCurrentPage(value);
-  },[]);
+  }, []);
   //ShowModal
-  const handleOpen = useCallback(()=>{
-    dispatch(createAction(SHOW_MODALUSER,{ users:{
-      taiKhoan: "",
-      matKhau:"",
-      email: '',
-      soDt: "",
-      maNhom:"",
-      maLoaiNguoiDung: "",
-      hoTen: "",
-  },role:1,
-}));
-  },[]);
-    
+  const handleOpen = useCallback(() => {
+    dispatch(createAction(SHOW_MODALUSER, {
+      users: {
+        taiKhoan: "",
+        matKhau: "",
+        email: '',
+        soDt: "",
+        maNhom: "",
+        maLoaiNguoiDung: "",
+        hoTen: "",
+      }, role: 1,
+    }));
+  }, []);
+
 
   //renderuser
   const list = searchActive ? listUserSearch : listUser;
@@ -95,7 +96,7 @@ const UserList = (props) => {
     return list.map((item, index) => {
       return (
         <Grid item md={6} xs={12} key={index}>
-          <UserItem item={item}  />
+          <UserItem item={item} currentPage={currentPage} perToPage={perToPage} />
         </Grid>
       );
     });
@@ -111,166 +112,172 @@ const UserList = (props) => {
   //   });
   // }, [listUserSearch]);
 
-  const handelSearch = useCallback((e)=>{ 
-    setSearch(e.target.value)
-    
-  },[])
-  const getSearch = useCallback(()=>{
+  const handelSearch = useCallback((e) => {
+    setSearch(e.target.value);
+    if (e.target.value !== "") {
+      dispatch(searchUser(e.target.value, currentPage, perToPage));
+    } else {
+      dispatch(fetchUser(currentPage, perToPage));
+    }
+
+  }, [currentPage, perToPage]);
+  const getSearch = useCallback((e) => {
+    e.preventDefault();
     setCurrentPage(1);
-      dispatch(searchUser(search,currentPage,perToPage));
-  },[search,currentPage]);
-  
+    dispatch(searchUser(search, currentPage, perToPage));
+  }, [search, currentPage]);
+
 
   return (
     <Fragment>
-      {loading? <Loading/> : <div>
-      <Box display={"flex"}>
-        {/* SIDEBAR */}
-        <Box className={ !activeArrow ? props.classes.left : props.classes.left2} >
-          <SideBar />
-        </Box>
-        <Box className={!activeArrow ? props.classes.right : props.classes.right2}>
-          {/* =====NAVBAR===== */}
-          <NavBar />
+      {loading ? <Loading /> : <div>
+        <Box display={"flex"}>
+          {/* SIDEBAR */}
+          <Box className={!activeArrow ? props.classes.left : props.classes.left2} >
+            <SideBar />
+          </Box>
+          <Box className={!activeArrow ? props.classes.right : props.classes.right2}>
+            {/* =====NAVBAR===== */}
+            <NavBar />
 
-          {/* =====TOPCONTENT===== */}
-          <Box className={props.classes.content}>
+            {/* =====TOPCONTENT===== */}
+            <Box className={props.classes.content}>
 
-            <Box className={props.classes.headersearch}>
-              <Box component="h3" variant="h5" paddingBottom={"20px"}>
-              Danh Sách Người Dùng
+              <form className={props.classes.headersearch} onSubmit={getSearch}>
+                <Box component="h3" variant="h5" paddingBottom={"20px"}>
+                  Danh Sách Người Dùng
              </Box>
 
-              <Box>
-              
-              <Box className={props.classes.search}>
-              
-              <div className={props.classes.searchIcon}>
-                
-                <SearchIcon />
-              </div>
-              <InputBase
-              placeholder="Search…"
-              onChange={handelSearch}
-              
-              classes={{
-                root: props.classes.inputRoot,
-                input: props.classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-             />
+                <Box>
 
-              </Box>
-              <Button className={props.classes.searchbtn} onClick={getSearch} >Tìm kiếm</Button>
-            
-              </Box>
-              
-            </Box>
+                  <Box className={props.classes.search}>
 
-            <Grid container spacing={2} py={5}>
-              <Grid
-                item
-                sm={6}
-                md={4}
-                xs={12}
-                className={props.classes.contentItem}
-              >
-                <Box className={props.classes.item}>
-                  <Box className={props.classes.itemIcon}>
-                    <PersonIcon />
+                    <div className={props.classes.searchIcon}>
+
+                      <SearchIcon />
+                    </div>
+                    <InputBase
+                      placeholder="Search…"
+                      onChange={handelSearch}
+
+                      classes={{
+                        root: props.classes.inputRoot,
+                        input: props.classes.inputInput,
+                      }}
+                      inputProps={{ 'aria-label': 'search' }}
+                    />
+
                   </Box>
-                  <Box paddingLeft={"20px"}>
-                    <Typography variant="h6" component="h5">
-                      {/* {!searchActive ? listUser.length : listUserSearch.length} */}
-                      {list.length}
-                    </Typography>
-                    <Typography>Người dùng / Trang</Typography>
-                  </Box>
+                  <Button type="submit" className={props.classes.searchbtn} >Tìm kiếm</Button>
+
                 </Box>
-              </Grid>
-              <Grid
-                item
-                sm={6}
-                md={4}
-                xs={12}
-                className={props.classes.contentItem}
-              >
-                <Box className={props.classes.item}>
-                  <Box className={props.classes.itemIcon}>
-                    <InfoIcon />
+
+              </form>
+
+              <Grid container spacing={2} py={5}>
+                <Grid
+                  item
+                  sm={6}
+                  md={4}
+                  xs={12}
+                  className={props.classes.contentItem}
+                >
+                  <Box className={props.classes.item}>
+                    <Box className={props.classes.itemIcon}>
+                      <PersonIcon />
+                    </Box>
+                    <Box paddingLeft={"20px"}>
+                      <Typography variant="h6" component="h5">
+                        {/* {!searchActive ? listUser.length : listUserSearch.length} */}
+                        {list.length}
+                      </Typography>
+                      <Typography>Người dùng / Trang</Typography>
+                    </Box>
                   </Box>
-                  <Box paddingLeft={"20px"}>
-                    <Typography variant="h6" component="h5">
-                      2
-                    </Typography>
-                    <Typography>Số quyền</Typography>
-                  </Box>
-                </Box>
-              </Grid>
-              <Grid
-                item
-                sm={6}
-                md={4}
-                xs={12}
-                className={props.classes.contentItem}
-              >
-                <Box className={props.classes.item}>
-                  <Box className={props.classes.itemIcon}>
-                    <SupervisorAccountIcon />
-                  </Box>
-                  <Box paddingLeft={"20px"}>
-                    <Typography variant="h6" component="h5">
-                      {totalCount}
-                    </Typography>
-                    <Typography>Tổng số người dùng</Typography>
-                  </Box>
-                </Box>
-              </Grid>
-            </Grid>
-
-            {/* =====USERITEM===== */}
-
-            <Box className={props.classes.userItem}>
-              <Box className={props.classes.topItem}>
-                <Typography component="h5" variant="h5">
-                  Người dùng
-                </Typography>
-                <Button className={props.classes.btnItem} onClick={handleOpen}>
-                  <AddIcon />
-                  <p className={props.classes.btnItemText}>Thêm Mới</p> 
-                </Button>
-              </Box>
-
-              {/* TABLE */}
-
-              
-
-
-               {/* Pagination */}
-              <Box>
-              <Box className={props.classes.table}>
-                <Grid container spacing={2}>
-                  {/* {!searchActive ? renderUser() : renderUserSearch()} */}
-                  {renderUser()}
                 </Grid>
-              </Box>
+                <Grid
+                  item
+                  sm={6}
+                  md={4}
+                  xs={12}
+                  className={props.classes.contentItem}
+                >
+                  <Box className={props.classes.item}>
+                    <Box className={props.classes.itemIcon}>
+                      <InfoIcon />
+                    </Box>
+                    <Box paddingLeft={"20px"}>
+                      <Typography variant="h6" component="h5">
+                        2
+                    </Typography>
+                      <Typography>Số quyền</Typography>
+                    </Box>
+                  </Box>
+                </Grid>
+                <Grid
+                  item
+                  sm={6}
+                  md={4}
+                  xs={12}
+                  className={props.classes.contentItem}
+                >
+                  <Box className={props.classes.item}>
+                    <Box className={props.classes.itemIcon}>
+                      <SupervisorAccountIcon />
+                    </Box>
+                    <Box paddingLeft={"20px"}>
+                      <Typography variant="h6" component="h5">
+                        {totalCount}
+                      </Typography>
+                      <Typography>Tổng số người dùng</Typography>
+                    </Box>
+                  </Box>
+                </Grid>
+              </Grid>
 
-              <Box  className={props.classes.pagination}>
-              <Pagination count={totalPages} page={currentPage} variant="outlined" color="secondary" onChange={handleChange} />
-              </Box>
-                
-              </Box>
+              {/* =====USERITEM===== */}
 
-              {/* MODAL */}
-              {modalUser && <ModalUser /> }
-              
-              { modalUserDetail && <ModalUserDetail/>}
-              
+              <Box className={props.classes.userItem}>
+                <Box className={props.classes.topItem}>
+                  <Typography component="h5" variant="h5">
+                    Người dùng
+                </Typography>
+                  <Button className={props.classes.btnItem} onClick={handleOpen}>
+                    <AddIcon />
+                    <p className={props.classes.btnItemText}>Thêm Mới</p>
+                  </Button>
+                </Box>
+
+                {/* TABLE */}
+
+
+
+
+                {/* Pagination */}
+                <Box>
+                  <Box className={props.classes.table}>
+                    <Grid container spacing={2}>
+                      {/* {!searchActive ? renderUser() : renderUserSearch()} */}
+                      {renderUser()}
+                    </Grid>
+                  </Box>
+
+                  <Box className={props.classes.pagination}>
+                    <Pagination count={totalPages} page={currentPage} variant="outlined" color="secondary" onChange={handleChange} />
+                  </Box>
+
+                </Box>
+
+                {/* MODAL */}
+                {modalUser && <ModalUser />}
+
+                {modalUserDetail && <ModalUserDetail />}
+
+              </Box>
             </Box>
           </Box>
         </Box>
-      </Box>
-    </div>}
+      </div>}
     </Fragment>
   );
 };

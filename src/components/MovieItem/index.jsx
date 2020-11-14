@@ -136,7 +136,7 @@ const MovieItem = (props) => {
           <Button className={props.classes.btnIconEdit} color={"secondary"} onClick={handelEdit(props.item)}>
             <EditIcon />
           </Button>
-          <Button className={props.classes.btnIconDelete} color="error" onClick={handelDelete(maPhim)}>
+          <Button className={props.classes.btnIconDelete} color="secondary" onClick={handelDelete(maPhim)}>
             <DeleteIcon />
           </Button>
         </CardActions>
