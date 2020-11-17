@@ -3,12 +3,12 @@ import connector from "../../configs/connector";
 import {ShowTimeService} from "../../services/index"
 import {  SET_SHOWTIME } from "./type";
 import swal from "sweetalert"
+import { PhoneCallback } from "@material-ui/icons";
 
 export const fetchShowTime = (id) => {
   
   return dispatch =>{
     ShowTimeService.getAllShowTimeService(id).then(res=>{
-      console.log(res.data);
       dispatch(createAction(SET_SHOWTIME, res.data));
     }).catch(err=>{
       console.log(err);
@@ -18,7 +18,7 @@ export const fetchShowTime = (id) => {
 
 
 
-export const addShowTime = (data) =>{
+export const addShowTime = (data,callback) =>{
   console.log(data);
   return dispatch => {
     ShowTimeService.addShowTimeService(data).then(()=>{
@@ -27,7 +27,7 @@ export const addShowTime = (data) =>{
         text: `Chúc mừng bạn đã thêm lịch chiếu thành công !`,
         icon: "success",
     })
-      console.log("ADD Thành Công")
+      callback();
     }).catch(err=>{
       swal({
         title: "Thêm Thất bại!",

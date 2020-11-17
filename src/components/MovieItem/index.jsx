@@ -20,7 +20,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Backdrop from "@material-ui/core/Backdrop";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useCallback } from "react";
 import { SHOW_MODALMOVIE } from "../../redux/action/type";
 import { createAction } from "../../redux/action";
@@ -50,6 +50,13 @@ const MovieItem = (props) => {
   const [openTrailer, setOpenTrailer] = useState(false);
   const dispatch = useDispatch();
 
+  const currentPage = useSelector((state) => {
+    return state.movie.currentPage;
+  });
+  const perToPage = useSelector((state) => {
+    return state.movie.perToPage;
+  });
+
   const handleToggle = useCallback((value) => () => {
     setOpen(value);
     dispatch(detailMovie(maPhim))
@@ -59,9 +66,9 @@ const MovieItem = (props) => {
     setOpenTrailer(value);
   }, [props.item]);
 
-  const getDetail = useCallback(() => {
+  const getDetail = useCallback((maPhim)=>() => {
     dispatch(fetchShowTime(maPhim));
-  }, [maPhim]);
+  }, []);
 
   const handelEdit = useCallback((value) => () => {
     dispatch(createAction(SHOW_MODALMOVIE, {
@@ -71,7 +78,7 @@ const MovieItem = (props) => {
 
   }, [props.item]);
 
-  const handelDelete = useCallback((maPhim) => () => {
+  const handelDelete = useCallback((maPhim,currentPage,perToPage) => () => {
     swal({
       title: "Bạn chắc chứ?",
       text: "Bạn có muốn xóa phim này không!",
@@ -85,7 +92,7 @@ const MovieItem = (props) => {
             swal("Phim đã được xóa !", {
               icon: "success",
             });
-            // dispatch(fetchMovie(currentPage, perToPage));
+            dispatch(fetchMovie(currentPage, perToPage));
           }, () => {
             swal("Lỗi !!", {
               icon: "info",
@@ -123,20 +130,20 @@ const MovieItem = (props) => {
           </CardContent>
           <Box className={props.classes.cardAbove} >
             <Box >
-              <Button type="button" onClick={handleToggleTrailer(true)}>
+              <Button onClick={handleToggleTrailer(true)}>
                 <PlayArrowIcon className={props.classes.cardAboveIcons} />
               </Button>
             </Box>
           </Box>
         </CardActionArea>
         <CardActions style={{ textAlign: "center", display: "block" }}>
-          <Button className={props.classes.btnIconEdit} color={"primary"} onClick={handleToggle(true)}>
+          <Button className={props.classes.btnIconInfo}  onClick={handleToggle(true)}>
             <InfoIcon />
           </Button>
-          <Button className={props.classes.btnIconEdit} color={"secondary"} onClick={handelEdit(props.item)}>
+          <Button className={props.classes.btnIconEdit}  onClick={handelEdit(props.item)}>
             <EditIcon />
           </Button>
-          <Button className={props.classes.btnIconDelete} color="secondary" onClick={handelDelete(maPhim)}>
+          <Button className={props.classes.btnIconDelete}  onClick={handelDelete(maPhim,currentPage, perToPage)}>
             <DeleteIcon />
           </Button>
         </CardActions>
@@ -174,7 +181,7 @@ const MovieItem = (props) => {
                 <span><p className={props.classes.name}>Mô Tả : </p> {moTa.substr(0, 150)}</span> <br />
                 <span><p className={props.classes.name}>Đánh Giá : </p> {danhGia}</span> <br />
                 <br /><br />
-                <Link to="/lichchieu" style={{ textDecoration: "none" }}> <Button className={props.classes.btn} onClick={getDetail}> Xem lịch chiếu</Button></Link>
+                <Link to="/lichchieu" style={{ textDecoration: "none" }}> <Button className={props.classes.btn} onClick={getDetail(maPhim)}> Xem lịch chiếu</Button></Link>
               </Grid>
             </Grid>
           </div>

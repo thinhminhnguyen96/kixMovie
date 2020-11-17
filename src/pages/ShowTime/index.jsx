@@ -76,7 +76,7 @@ const ShowTime = (props) => {
     if(active){
       dispatch(fetchShowTime(parseInt(search) ));
     }
-  },[listShowTime,search])
+  },[search])
   
   
   const {biDanh,
@@ -122,7 +122,9 @@ const ShowTime = (props) => {
   const handelSubmit = useCallback(
     (e) => {
       e.preventDefault();
-       dispatch(addShowTime(state.showTimeDay)); 
+       dispatch(addShowTime(state.showTimeDay,()=>{
+        dispatch(fetchShowTime(maPhim));
+       })); 
        setOpen(false);
     },
     [state.showTimeDay] 

@@ -1,4 +1,4 @@
-import { HIDE_MODALMOVIE, SET_MODALACTIVE, SHOW_MODALMOVIE } from "../action/type";
+import { HIDE_MODALMOVIE, SET_MODALACTIVE, SHOW_MODALMOVIE,SET_CHECKED } from "../action/type";
 
 let initialState = {
   modalMovie: false,
@@ -14,6 +14,7 @@ let initialState = {
     tenPhim: "",
     trailer: "",
   },
+  checked:true,
 }
 
 const reducer = (state = initialState,{type,payload})=>{
@@ -21,7 +22,11 @@ const reducer = (state = initialState,{type,payload})=>{
     case SHOW_MODALMOVIE:
       return {...state,modalMovie:true,movie:payload.movies,role:payload.role}
     case HIDE_MODALMOVIE:
-      return {...state,modalMovie:false}
+      return {...state,modalMovie:false,checked:true}
+    case SET_CHECKED:{
+        state.checked = !state.checked;
+        return { ...state };
+      }
     default: return state
   }
 }

@@ -16,9 +16,15 @@ const style = (theme) => {
         backgroundColor: "#303A52",
       },
     },
+    btnIconInfo: {
+      minWidth: 0,
+      padding: "5px",
+      color: "#303A52",
+    },
     btnIconEdit: {
       minWidth: 0,
       padding: "5px",
+      color: "#22D1EE",
     },
     btnIconDelete: {
       minWidth: 0,

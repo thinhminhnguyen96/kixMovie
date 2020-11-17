@@ -12,12 +12,12 @@ import styles from "./style";
 import React, { memo, useMemo } from "react";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useCallback } from "react";
 import { SHOW_MODALUSER } from "../../redux/action/type";
 import { createAction } from "../../redux/action";
 import swal from "sweetalert";
-import { deleteUser, detailUser, fetchUser } from "../../redux/action/userAction";
+import { deleteUser, detailUser, fetchUser, searchUser } from "../../redux/action/userAction";
 import InfoIcon from '@material-ui/icons/Info';
 
 
@@ -38,7 +38,12 @@ const UserItem = (props) => {
   const { currentPage, perToPage } = useMemo(() => {
     return props;
   }, [props]);
-
+  const searchActive = useSelector((state) => {
+    return state.user.searchActive;
+  });
+  const nameSearch = useSelector((state) => {
+    return state.user.nameSearch;
+  });
 
 
   const handleToggle = useCallback((taiKhoan) => () => {
@@ -52,7 +57,7 @@ const UserItem = (props) => {
     }))
   }, [props.item])
 
-  const handelDelete = useCallback((taiKhoan, currentPage, perToPage) => () => {
+  const handelDelete = useCallback((taiKhoan,search, currentPage, perToPage) => () => {
     swal({
       title: "Bạn chắc chứ?",
       text: "Bạn có muốn xóa người dùng này không!",
@@ -66,7 +71,8 @@ const UserItem = (props) => {
             icon: "success",
           });
           dispatch(deleteUser(taiKhoan, () => {
-            dispatch(fetchUser(currentPage, perToPage));
+            !searchActive ? dispatch(fetchUser(currentPage, perToPage)) : dispatch(searchUser(search,currentPage, perToPage)); 
+            
           }));
 
         } else {
@@ -102,13 +108,13 @@ const UserItem = (props) => {
           </CardContent>
 
           <Box className={props.classes.btnContent}>
-            <Button variant="contained" className={props.classes.btnIconEdit} color={"primary"} onClick={handleToggle(taiKhoan)}>
+            <Button variant="contained" className={props.classes.btnIconInfo}  onClick={handleToggle(taiKhoan)}>
               <InfoIcon className={props.classes.iconsize} />
             </Button>
-            <Button className={props.classes.btnIconEdit} color={"secondary"} onClick={handelEdit(props.item)}>
+            <Button className={props.classes.btnIconEdit}  onClick={handelEdit(props.item)}>
               <EditIcon className={props.classes.iconsize} />
             </Button>
-            <Button variant="contained" className={props.classes.btnIconDelete} color="secondary" onClick={handelDelete(taiKhoan, currentPage, perToPage)}>
+            <Button variant="contained" className={props.classes.btnIconDelete}  onClick={handelDelete(taiKhoan,nameSearch, currentPage, perToPage)}>
               <DeleteIcon className={props.classes.iconsize} />
             </Button>
           </Box>

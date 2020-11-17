@@ -17,6 +17,7 @@ export const SET_USER = "user/SET_USER";
 
 export const SHOW_MODALMOVIE = "modalActive/SHOW_MODALMOVIE";
 export const HIDE_MODALMOVIE = "modalActive/HIDE_MODALMOVIE";
+export const SET_CHECKED = "modalActive/SET_CHECKED";
 
 export const SHOW_MODALUSER = "modalActive/SHOW_MODALUSER";
 export const HIDE_MODALUSER = "modalActive/HIDE_MODALUSER";

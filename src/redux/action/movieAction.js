@@ -23,8 +23,6 @@ export const editMovie = (data) => {
         text: `Chúc mừng bạn đã chỉnh sửa phim thành công !`,
         icon: "success",
       })
-      console.log(res.data);
-      // dispatch(createAction(EDIT_MOVIE, { data: res.data, role: 1 }));
       connector({
         url: `https://movie0706.cybersoft.edu.vn/api/QuanLyPhim/LayThongTinPhim?MaPhim=${res.data.maPhim}`,
         method: 'GET'
@@ -35,16 +33,19 @@ export const editMovie = (data) => {
         };
         console.log(item);
         dispatch(createAction(EDIT_MOVIE, item));
+        
       }).catch(err => {
 
         console.log(err);
       })
+      // callbackSuccess();
     }).catch(err => {
       swal({
         title: "Chỉnh sửa Thất bại!",
         text: `Vui lòng chọn ảnh !`,
         icon: "error",
       })
+      
       console.log("Edit Thất Bại");
     })
   }
@@ -66,10 +67,8 @@ export const editMovieNoneImg = (data) => {
         let item = {
           biDanh, danhGia, hinhAnh, maNhom, maPhim, moTa, ngayKhoiChieu, tenPhim, trailer,
         };
-        console.log(item);
         dispatch(createAction(EDIT_MOVIE, item));
       }).catch(err => {
-
         console.log(err);
       })
     }).catch(err => {
@@ -86,29 +85,12 @@ export const editMovieNoneImg = (data) => {
 export const addMovie = (data, callbackSuccess) => {
 
   return dispatch => {
-    console.log(data);
     MovieService.addMovieService(data).then((res) => {
       swal({
         title: "Thêm Thành công!",
         text: `Chúc mừng bạn đã thêm phim thành công !`,
         icon: "success",
       })
-
-      // connector({
-      //   url: `https://movie0706.cybersoft.edu.vn/api/QuanLyPhim/LayThongTinPhim?MaPhim=${res.data.maPhim}`,
-      //   method: 'GET'
-      // }).then(res => {
-      //   const { biDanh, danhGia, hinhAnh, maNhom, maPhim, moTa, ngayKhoiChieu, tenPhim, trailer, } = res.data
-      //   let item = {
-      //     biDanh, danhGia, hinhAnh, maNhom, maPhim, moTa, ngayKhoiChieu, tenPhim, trailer,
-      //   };
-      //   console.log(item);
-      //   // dispatch(createAction(EDIT_MOVIE, item));
-      //   // dispatch(createAction(ADD_MOVIE, item));
-      // }).catch(err => {
-
-      //   console.log(err);
-      // })
       callbackSuccess();
     }).catch(err => {
       swal({
@@ -123,11 +105,7 @@ export const addMovie = (data, callbackSuccess) => {
 
 export const deleteMovie = (maPhim, callbackSuccess, callbackFail) => {
   return dispatch => {
-    console.log(maPhim);
     MovieService.deleteMovieService(maPhim).then((res) => {
-      console.log(maPhim);
-      console.log("DELETE Thành Công");
-      // dispatch(createAction(DELETE_MOVIE, maPhim));
       callbackSuccess();
     }).catch(err => {
       console.log("DELETE Thất Bại");
@@ -137,7 +115,6 @@ export const deleteMovie = (maPhim, callbackSuccess, callbackFail) => {
 }
 
 export const detailMovie = (maPhim) => {
-  console.log(maPhim);
   return dispatch => {
     MovieService.detailMovieService(maPhim).then((res) => {
       console.log(res.data)

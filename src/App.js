@@ -10,7 +10,6 @@ import Loading from "./Loading";
 
 const MovieList = React.lazy(()=> import('./pages/MovieList'));
 const UserList = React.lazy(()=>import("./pages/UserList")) ;
-// const UserListSearch = React.lazy(()=>import("./pages/UserListSearch")) ;
 const SignIn = React.lazy(()=>import("./pages/SignIn")) ;
 const ShowTime = React.lazy(()=>import("./pages/ShowTime")) ;
 const Home = React.lazy(()=>import("./pages/Home")) ;
@@ -34,7 +33,6 @@ class App extends Component {
             <Fragment>
               <Route exact path="/lichchieu" component={ShowTime} />
               <Route exact path="/nguoidung" component={UserList} />
-              {/* <Route exact path="/nguoidung/:timkiem" component={UserListSearch} /> */}
               <Route exact path="/phim" component={MovieList} />
               <Route exact path="/dangnhap" component={SignIn} />
               <Route exact path="/" component={Home} />

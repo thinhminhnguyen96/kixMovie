@@ -1,14 +1,12 @@
 import { HIDE_USERDETAIL, SET_USER, SET_USERDETAIL, SET_USERSEARCH } from "../action/type";
 
 let initialState = {
-  userListSearch: [],
+  userListSearch: [{}],
   searchActive: false,
   userList: [],
   totalCount: 0,
   totalPages: 0,
-  // totalCountSearch:0,
-  // totalPagesSearch:0,
-  // nameSearch:"",
+  nameSearch:"",
   currentPage: 1,
   perToPage: 8,
   modalUserDetail: false,
@@ -29,14 +27,13 @@ const reducer = (state = initialState, { type, payload }) => {
       state.perToPage = payload.soPhanTuTrang;
       return { ...state };
     case SET_USERSEARCH: {
-      console.log(payload)
       state.searchActive = true;
-
       state.userListSearch = payload.data.items;
       state.totalCount = payload.data.totalCount;
       state.totalPages = payload.data.totalPages;
       state.currentPage = payload.soTrang;
       state.perToPage = payload.soPhanTuTrang;
+      state.nameSearch = payload.taiKhoan;
       return { ...state };
     }
     case SET_USERDETAIL: {

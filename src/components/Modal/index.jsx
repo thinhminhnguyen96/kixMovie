@@ -1,4 +1,4 @@
-import { Box, Button, Container, FormControl, Grid, InputLabel, MenuItem, Modal, Select, TextField, withStyles } from '@material-ui/core';
+import { Box, Button, Container, FormControl, Grid, InputLabel, MenuItem, Modal, Select, Switch, TextField, withStyles } from '@material-ui/core';
 import React, { Fragment, memo, useEffect, useMemo } from 'react';
 import { useCallback } from 'react';
 import { useState } from 'react';
@@ -7,10 +7,11 @@ import styles from "./style"
 import AddIcon from "@material-ui/icons/Add";
 import CancelIcon from "@material-ui/icons/Cancel";
 import { createAction } from '../../redux/action';
-import { HIDE_MODALMOVIE } from '../../redux/action/type';
+import { HIDE_MODALMOVIE,SET_CHECKED } from '../../redux/action/type';
 import Backdrop from "@material-ui/core/Backdrop";
 import EditIcon from "@material-ui/icons/Edit";
 import { editMovie, addMovie, editMovieNoneImg, fetchMovie } from "../../redux/action/movieAction";
+import swal from 'sweetalert';
 
 
 const ModalMovie = (props) => {
@@ -30,6 +31,9 @@ const ModalMovie = (props) => {
   const perToPage = useSelector((state) => {
     return state.movie.perToPage;
   });
+  const checked = useSelector((state) => {
+    return state.modalMovies.checked;
+  });
 
   const [state, setState] = useState({
     movies: {
@@ -42,12 +46,17 @@ const ModalMovie = (props) => {
       ngayKhoiChieu: '',
       tenPhim: '',
       trailer: '',
-    }
+    },
+    
   });
   useEffect(() => { setState({ movies: moviea }) }, []);
   const handleClose = useCallback(() => {
     dispatch(createAction(HIDE_MODALMOVIE));
   }, []);
+
+  const handleChangeChecked = (event) => {
+    dispatch(createAction(SET_CHECKED,{}));
+  };
 
   const handelOnchange = useCallback(
     (e) => {
@@ -94,8 +103,20 @@ const ModalMovie = (props) => {
       e.preventDefault();
       var form_data = new FormData();
       for (var key in state.movies) {
-
-        form_data.append(key, state.movies[key]);
+        if(key === 'danhGia'){
+          if(state.movies[key] > 10 || state.movies[key] < 0){
+            return swal({
+              title: "Kiểm tra lại",
+              text: `Đánh giá từ 0 - 10`,
+              icon: "error",
+            })
+          }else{
+            form_data.append(key, state.movies[key]); 
+          }
+        }else{
+          form_data.append(key, state.movies[key]);
+        }
+        
       }
       if (moviea.hinhAnh === state.movies.hinhAnh) {
         let item = { ...state.movies, ngayKhoiChieu: changeDateFormater(state.movies.ngayKhoiChieu) };
@@ -103,13 +124,29 @@ const ModalMovie = (props) => {
           dispatch(addMovie(form_data, () => {
             dispatch(fetchMovie(currentPage, perToPage));
           })) :
-          dispatch(editMovieNoneImg(item));
-      } else {
+          (moviea.tenPhim === state.movies.tenPhim ? dispatch(editMovieNoneImg(item)) :  swal({
+            title: "Kiểm tra lại",
+            text: `Thay đổi cả tên và hình`,
+            icon: "error",
+          }));
+      } else if(moviea.tenPhim !== state.movies.tenPhim){
+        
         role === 1 ?
           dispatch(addMovie(form_data, () => {
             dispatch(fetchMovie(currentPage, perToPage));
           })) :
-          dispatch(editMovie(form_data));
+            dispatch(editMovie(form_data));
+      }
+      else {
+        role === 1 ?
+          dispatch(addMovie(form_data, () => {
+            dispatch(fetchMovie(currentPage, perToPage));
+          })) :
+          swal({
+            title: "Kiểm tra lại",
+            text: `Thay đổi cả tên và hình`,
+            icon: "error",
+          })
       }
 
 
@@ -118,16 +155,24 @@ const ModalMovie = (props) => {
     },
     [state.movies]
   );
-  //useMeno trả về 1 biến nếu không cần thiết để render lại
 
 
   const bodyModal = (<Box >
     <div className={props.classes.paper}>
 
-      {role === 1 ? <h2 id="transition-modal-themmoi">Thêm Mới</h2> : <h2 id="transition-modal-themmoi">Chỉnh sửa</h2>}
+      {role === 1 ? <h2 id="transition-modal-themmoi">Thêm Mới</h2> : 
+      <div className={props.classes.editTitle}>
+        {checked ? <h2 id="transition-modal-themmoi">Chỉnh sửa thông tin</h2> : <h2 id="transition-modal-themmoi">Chỉnh sửa cả hình và tên</h2>}
+        <Switch
+        className={props.classes.editTitleSwitch}
+        onClick={handleChangeChecked}
+        name="checkedA"
+        inputProps={{ 'aria-label': 'secondary checkbox' }}
+      />
+      </div>
+      }
 
       <Box component="form">
-        {/* {role!==1&&<img src={hinhAnh} alt="#"/>} */}
         <Container maxWidth="sm">
           <Grid container spacing={3}>
             <Grid item md={6} style={{ display: role === 1 ? 'none' : 'block' }}>
@@ -151,6 +196,7 @@ const ModalMovie = (props) => {
                 variant="outlined"
                 className={props.classes.modalAdd}
                 name="tenPhim"
+                disabled={role === 2 && checked}
                 onChange={handelOnchange}
                 value={tenPhim}
               />
@@ -186,6 +232,7 @@ const ModalMovie = (props) => {
                 className={props.classes.modalAdd}
                 name="hinhAnh"
                 onChange={handelOnchange}
+                disabled={role === 2 && checked}
                 files={hinhAnh}
                 type="file"
               />
@@ -213,7 +260,7 @@ const ModalMovie = (props) => {
 
 
             </Grid>
-            <Grid item md={6}>
+            <Grid item md={6} >
               <TextField
 
                 label="Đánh Giá"
@@ -223,13 +270,14 @@ const ModalMovie = (props) => {
                 name="danhGia"
                 onChange={handelOnchange}
                 value={danhGia}
+                
               />
             </Grid>
 
             <Grid item md={6}>
               <TextField
 
-                label="Ngày Khởi Chiếu (mm/dd/yyyy)"
+                label="Ngày Khởi Chiếu (dd/mm/yyyy)"
                 variant="outlined"
 
                 className={props.classes.modalAdd}
@@ -253,16 +301,21 @@ const ModalMovie = (props) => {
             </Grid>
 
             <Grid item md={12}>
-              <Button
+            {role === 1 ? <Button
                 className={props.classes.btnItemModal}
                 onClick={handelSubmit(currentPage, perToPage)}
               // onClick={handleClose}
               >
-                {role === 1 ? <Fragment><AddIcon />
-                Thêm Mới</Fragment> : <Fragment><EditIcon />
-                Chỉnh Sửa</Fragment>}
-
-              </Button>
+                <AddIcon />
+                Thêm Mới
+              </Button> : <Button
+                  className={props.classes.btnItemModalEdit}
+                  onClick={handelSubmit(currentPage, perToPage)}
+                // onClick={handleClose}
+                >
+                  <EditIcon />
+                Chỉnh Sửa
+              </Button>}
               <Button
                 className={props.classes.btnItemModalClose}
                 type="button"

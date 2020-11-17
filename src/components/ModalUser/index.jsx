@@ -11,7 +11,7 @@ import { ADD_MOVIE, HIDE_MODALMOVIE, HIDE_MODALUSER, SET_MODALACTIVE, SHOW_MODAL
 
 import Backdrop from "@material-ui/core/Backdrop";
 import EditIcon from "@material-ui/icons/Edit";
-import { editUser, addUser, fetchUser } from "../../redux/action/userAction";
+import { editUser, addUser, fetchUser, searchUser } from "../../redux/action/userAction";
 import swal from 'sweetalert';
 
 const ModalUser = (props) => {
@@ -30,6 +30,12 @@ const ModalUser = (props) => {
   });
   const perToPage = useSelector((state) => {
     return state.user.perToPage;
+  });
+  const searchActive = useSelector((state) => {
+    return state.user.searchActive;
+  });
+  const nameSearch = useSelector((state) => {
+    return state.user.nameSearch;
   });
 
 
@@ -59,14 +65,29 @@ const ModalUser = (props) => {
     },
     [state.users]
   );
-  const handelSubmit = useCallback((currentPage, perToPage) =>
+  const handelSubmit = useCallback((search,currentPage, perToPage) =>
     (e) => {
       e.preventDefault();
       {
-        role === 1 ? dispatch(addUser(state.users)) : dispatch(editUser(state.users, () => {
+        !searchActive ?
+         (
+           role === 1 ? dispatch(addUser(state.users,()=>{
+          dispatch(fetchUser(currentPage, perToPage));
+        })) : dispatch(editUser(state.users, () => {
           dispatch(fetchUser(currentPage, perToPage));
         }))
+        ) 
+        : 
+        (
+          role === 1 ? dispatch(addUser(state.users,()=>{
+          dispatch(searchUser(search,currentPage, perToPage));
+        })) : dispatch(editUser(state.users, () => {
+          dispatch(searchUser(search,currentPage, perToPage));
+        }))
+        );
+        
       }
+
       dispatch(createAction(HIDE_MODALUSER));
     },
     [state.users]
@@ -92,13 +113,14 @@ const ModalUser = (props) => {
       <Box component="form">
         <Container maxWidth="sm">
           <Grid container spacing={3}>
-            <Grid item md={6}>
+            <Grid item md={6} >
               <TextField
 
                 label="Tài Khoản"
                 variant="outlined"
                 className={props.classes.modalAdd}
                 name="taiKhoan"
+                disabled={role === 2 && true}
                 onChange={handelOnchange}
                 value={taiKhoan}
               />
@@ -175,10 +197,8 @@ const ModalUser = (props) => {
             <Grid item md={6}>
 
               <FormControl variant="outlined" className={props.classes.modalAdd}>
-                <InputLabel id="demo-simple-select-outlined-label">Mã nhóm</InputLabel>
+                <InputLabel>Mã nhóm</InputLabel>
                 <Select
-                  labelId="demo-simple-select-outlined-label"
-                  id="demo-simple-select-outlined"
                   value={maNhom}
                   onChange={handelOnchange}
                   label="Mã Nhóm"
@@ -198,14 +218,14 @@ const ModalUser = (props) => {
             <Grid item md={12}>
               {role === 1 ? <Button
                 className={props.classes.btnItemModal}
-                onClick={handelSubmit}
+                onClick={handelSubmit(nameSearch,currentPage,perToPage)}
               // onClick={handleClose}
               >
                 <AddIcon />
                 Thêm Mới
               </Button> : <Button
                   className={props.classes.btnItemModalEdit}
-                  onClick={handelSubmit(currentPage, perToPage)}
+                  onClick={handelSubmit(nameSearch,currentPage, perToPage)}
                 // onClick={handleClose}
                 >
                   <EditIcon />

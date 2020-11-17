@@ -15,16 +15,49 @@ const style = (theme) => {
         backgroundColor: "#303A52",
       },
     },
+    btnIconInfo: {
+      fontSize:"5px",
+      minWidth: 0,
+      padding: "5px",
+      color: "#303A52",
+      '&.MuiButton-contained':{
+        boxShadow:"none",
+        backgroundColor:"#fff",
+      },
+      '&.MuiButton-contained:hover':{
+        boxShadow:"none",
+        backgroundColor:" rgba(48, 58, 82, 0.04)",
+      },
+      
+    },
     btnIconEdit: {
       fontSize:"5px",
       minWidth: 0,
       padding: "5px",
+      color: "#22D1EE",
+      '&.MuiButton-contained':{
+        boxShadow:"none",
+        backgroundColor:"#fff",
+      },
+      '&.MuiButton-contained:hover':{
+        boxShadow:"none",
+        backgroundColor:" rgba(48, 58, 82, 0.04)",
+      },
+      
     },
     btnIconDelete: {
       fontSize:"5px",
       minWidth: 0,
       padding: "5px",
       color: "#FF6565",
+      '&.MuiButton-contained':{
+        boxShadow:"none",
+        backgroundColor:"#fff",
+      },
+      '&.MuiButton-contained:hover':{
+        boxShadow:"none",
+        backgroundColor:" rgba(48, 58, 82, 0.04)",
+      },
     },
 
     //MODAL
@@ -71,11 +104,17 @@ const style = (theme) => {
       position:"absolute",
       textAlign:"center",
       top:1,
-      right:1
+      right:1,
+      
+
     }
     ,
     iconsize:{
-      fontSize:"20px"
+      fontSize:"20px",
+      '& .MuiButton-contained':{
+        boxShadow:"none",
+        backgroundColor:"#fff",
+      },
     },
     name:{
       color:"#43425D",

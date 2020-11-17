@@ -23,20 +23,18 @@ export const editUser = (data, callback) => {
         text: `Chúc mừng bạn đã chỉnh sửa phim thành công !`,
         icon: "success",
       })
-      console.log("Edit Thành Công")
       callback();
     }).catch(err => {
       swal({
         title: "Chỉnh sửa Thất bại!",
-        text: `Vui lòng kiểm tra lại !`,
+        text: `Vui lòng kiểm tra lại mã nhóm!`,
         icon: "error",
       })
-      console.log("Edit Thất Bại");
     })
   }
 }
 
-export const addUser = (data) => {
+export const addUser = (data,callback) => {
   console.log(data);
   return dispatch => {
     UserService.addUserService(data).then(() => {
@@ -45,14 +43,13 @@ export const addUser = (data) => {
         text: `Chúc mừng bạn đã thêm phim thành công !`,
         icon: "success",
       })
-      console.log("ADD Thành Công")
+      callback();
     }).catch(err => {
       swal({
         title: "Thêm Thất bại!",
         text: `Vui lòng kiểm tra lại !`,
         icon: "error",
       })
-      console.log("ADD Thất Bại");
     })
   }
 }
@@ -72,8 +69,7 @@ export const deleteUser = (taiKhoan, callback) => {
 export const searchUser = (taiKhoan, soTrang, soPhanTuTrang) => {
   return dispatch => {
     UserService.searchUserService(taiKhoan, soTrang, soPhanTuTrang).then((res) => {
-      dispatch(createAction(SET_USERSEARCH, { data: res.data, soTrang, soPhanTuTrang }));
-      // callback();
+      dispatch(createAction(SET_USERSEARCH, { data: res.data, soTrang, soPhanTuTrang,taiKhoan }));
     }).catch(err => {
       console.log("Search Thất Bại");
     })
@@ -83,7 +79,6 @@ export const searchUser = (taiKhoan, soTrang, soPhanTuTrang) => {
 export const detailUser = (taiKhoan) => {
   return dispatch => {
     UserService.detailUserService(taiKhoan).then((res) => {
-      console.log(res.data);
       dispatch(createAction(SET_USERDETAIL, res.data));
     }).catch(err => {
       console.log("Detail Thất Bại");

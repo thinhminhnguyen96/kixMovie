@@ -7,6 +7,7 @@ let initialState = {
   currentPage: 1,
   perToPage: 8,
   loading: true,
+  
 
 };
 
@@ -51,6 +52,7 @@ const reducer = (state = initialState, { type, payload }) => {
       state.movieList = mangTam;
       return { ...state };
     }
+    
     default:
       return state;
   }

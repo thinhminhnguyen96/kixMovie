@@ -7,14 +7,12 @@ import { SET_TOKEN, SET_CREDENTIALS } from "./type";
 import swal from "sweetalert"
 //acsync action
 export const signIn = (data, callback) => (dispatch) => {
-  console.log(data);
   connector({
     url: "https://movie0706.cybersoft.edu.vn/api/QuanLyNguoiDung/DangNhap",
     method: "POST",
     data: data,
   })
     .then((res) => {
-      console.log(res);
       if (res.data.maLoaiNguoiDung != "QuanTri") {
         swal({
           title: "Đăng Nhập Thất bại!",
@@ -25,7 +23,6 @@ export const signIn = (data, callback) => (dispatch) => {
         localStorage.setItem("t", res.data.accessToken); //Lưu token trên local đề F5 không mất
         localStorage.setItem("o", JSON.stringify(res.data));
         dispatch(createAction(SET_TOKEN, res.data.accessToken));
-        console.log(res.data);
         dispatch(createAction(SET_CREDENTIALS, res.data));
         callback();
       }

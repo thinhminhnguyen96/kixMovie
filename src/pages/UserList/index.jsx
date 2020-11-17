@@ -63,13 +63,13 @@ const UserList = (props) => {
   });
 
   useEffect(() => {
-    if (searchActive && search !== "") {
+    if (searchActive && search !== "" ) {
       dispatch(searchUser(search, currentPage, perToPage));
     } else {
       dispatch(fetchUser(currentPage, perToPage));
     }
 
-  }, [searchActive, currentPage]);
+  }, [searchActive, currentPage,search]);
 
   const handleChange = useCallback((event, value) => {
     setCurrentPage(value);
@@ -102,25 +102,9 @@ const UserList = (props) => {
     });
   }, [list]);
 
-  // const renderUserSearch = useCallback(() => {
-  //   return listUserSearch.map((item, index) => {
-  //     return (
-  //       <Grid item md={6} xs={12} key={index}>
-  //         <UserItem item={item}  />
-  //       </Grid>
-  //     );
-  //   });
-  // }, [listUserSearch]);
-
   const handelSearch = useCallback((e) => {
     setSearch(e.target.value);
-    if (e.target.value !== "") {
-      dispatch(searchUser(e.target.value, currentPage, perToPage));
-    } else {
-      dispatch(fetchUser(currentPage, perToPage));
-    }
-
-  }, [currentPage, perToPage]);
+  }, []);
   const getSearch = useCallback((e) => {
     e.preventDefault();
     setCurrentPage(1);

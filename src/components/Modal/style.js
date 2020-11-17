@@ -48,6 +48,15 @@
         backgroundColor: "#43425D",
         color: "#22D1EE",
       },
+    },
+    editTitle:{
+      display:"flex",
+      justifyContent:"space-between",
+
+    },
+    editTitleSwitch:{
+      marginTop:theme.spacing(2),
+      marginRight:theme.spacing(2),
     }
   }
  }
