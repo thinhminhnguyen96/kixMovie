@@ -4,12 +4,12 @@ let initialState = {
   credentialsA: {},
 };
 
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
+const reducer = (state = initialState, {type,payload}) => {
+  switch (type) {
     case SET_TOKEN:
-      return { ...state, token: action.payload };
+      return { ...state, token: payload };
     case SET_CREDENTIALS:
-      state.credentialsA = action.payload;
+      state.credentialsA = payload;
       return { ...state };
 
     default:

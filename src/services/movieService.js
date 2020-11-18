@@ -35,7 +35,6 @@ class MovieService {
 
   //ADD Moive
   addMovieService = (data) => {
-    console.log(data);
     return createConnector({
       method: "POST",
       url: `${this.url}/ThemPhimUploadHinh`,
@@ -45,7 +44,6 @@ class MovieService {
 
   //Delete Moive
   deleteMovieService = (id) => {
-    console.log(id);
     return createConnector({
       method: "DELETE",
       url: `${this.url}/XoaPhim?MaPhim=${id}`,
@@ -54,7 +52,6 @@ class MovieService {
   }
 
   detailMovieService = (id) => {
-    console.log(id)
     return createConnector({
       method: "GET",
       url: `${this.url}/LayThongTinPhim?MaPhim=${id}`,

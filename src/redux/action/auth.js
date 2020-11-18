@@ -13,7 +13,7 @@ export const signIn = (data, callback) => (dispatch) => {
     data: data,
   })
     .then((res) => {
-      if (res.data.maLoaiNguoiDung != "QuanTri") {
+      if (res.data.maLoaiNguoiDung !== "QuanTri") {
         swal({
           title: "Đăng Nhập Thất bại!",
           text: `Sai thông tin hoặc bạn không phải là quản trị !`,

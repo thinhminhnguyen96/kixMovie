@@ -87,7 +87,7 @@ const ModalUser = (props) => {
         );
         
       }
-
+      console.log(state.users)
       dispatch(createAction(HIDE_MODALUSER));
     },
     [state.users]
@@ -199,7 +199,7 @@ const ModalUser = (props) => {
               <FormControl variant="outlined" className={props.classes.modalAdd}>
                 <InputLabel>Mã nhóm</InputLabel>
                 <Select
-                  value={maNhom}
+                  value={'GP01'}
                   onChange={handelOnchange}
                   label="Mã Nhóm"
                   name="maNhom"
@@ -207,9 +207,7 @@ const ModalUser = (props) => {
                   <MenuItem value={'GP01'}>
                     <em>GP01</em>
                   </MenuItem>
-                  <MenuItem value={'GP02'}>GP02</MenuItem>
-                  <MenuItem value={'GP03'}>GP03</MenuItem>
-                  <MenuItem value={'GP04'}>GP04</MenuItem>
+                  
                 </Select>
               </FormControl>
 

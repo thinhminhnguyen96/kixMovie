@@ -19,7 +19,6 @@ export const fetchShowTime = (id) => {
 
 
 export const addShowTime = (data,callback) =>{
-  console.log(data);
   return dispatch => {
     ShowTimeService.addShowTimeService(data).then(()=>{
       swal({

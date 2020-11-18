@@ -42,7 +42,7 @@ export const editMovie = (data) => {
     }).catch(err => {
       swal({
         title: "Chỉnh sửa Thất bại!",
-        text: `Vui lòng chọn ảnh !`,
+        text: `Vui lòng chọn ảnh !!!!`,
         icon: "error",
       })
       
@@ -74,7 +74,7 @@ export const editMovieNoneImg = (data) => {
     }).catch(err => {
       swal({
         title: "Chỉnh sửa Thất bại!",
-        text: `Vui lòng kiểm tra lại !`,
+        text: `Vui lòng kiểm tra lại !!!`,
         icon: "error",
       })
       console.log("Edit Thất Bại");
@@ -95,7 +95,7 @@ export const addMovie = (data, callbackSuccess) => {
     }).catch(err => {
       swal({
         title: "Thêm Thất bại!",
-        text: `Vui lòng kiểm tra lại !`,
+        text: `Vui lòng kiểm tra lại !!!`,
         icon: "error",
       })
       console.log("ADD Thất Bại");

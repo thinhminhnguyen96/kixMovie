@@ -50,9 +50,17 @@ const UserItem = (props) => {
     dispatch(detailUser(taiKhoan))
   }, [props.item]);
 
-  const handelEdit = useCallback((values) => () => {
+  const handelEdit = useCallback(() => {
     dispatch(createAction(SHOW_MODALUSER, {
-      users: values,
+      users: {
+        taiKhoan:taiKhoan,
+        matKhau:matKhau,
+         email:email,
+        soDt:soDt,
+        maNhom:"GP01",
+        maLoaiNguoiDung:maLoaiNguoiDung,
+        hoTen:hoTen,
+      },
       role: 2
     }))
   }, [props.item])
@@ -111,7 +119,7 @@ const UserItem = (props) => {
             <Button variant="contained" className={props.classes.btnIconInfo}  onClick={handleToggle(taiKhoan)}>
               <InfoIcon className={props.classes.iconsize} />
             </Button>
-            <Button className={props.classes.btnIconEdit}  onClick={handelEdit(props.item)}>
+            <Button className={props.classes.btnIconEdit}  onClick={handelEdit}>
               <EditIcon className={props.classes.iconsize} />
             </Button>
             <Button variant="contained" className={props.classes.btnIconDelete}  onClick={handelDelete(taiKhoan,nameSearch, currentPage, perToPage)}>

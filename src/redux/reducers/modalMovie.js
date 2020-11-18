@@ -1,4 +1,4 @@
-import { HIDE_MODALMOVIE, SET_MODALACTIVE, SHOW_MODALMOVIE,SET_CHECKED } from "../action/type";
+import { HIDE_MODALMOVIE, SET_MODALACTIVE, SHOW_MODALMOVIE,SET_CHECKED ,SET_CHANGED} from "../action/type";
 
 let initialState = {
   modalMovie: false,
@@ -7,7 +7,7 @@ let initialState = {
     biDanh: "",
     maPhim:"",
     hinhAnh: "",
-    maNhom: "",
+    maNhom: "GP01",
     danhGia:"",
     moTa: "",
     ngayKhoiChieu: "",
@@ -15,6 +15,7 @@ let initialState = {
     trailer: "",
   },
   checked:true,
+  
 }
 
 const reducer = (state = initialState,{type,payload})=>{
@@ -27,6 +28,7 @@ const reducer = (state = initialState,{type,payload})=>{
         state.checked = !state.checked;
         return { ...state };
       }
+      
     default: return state
   }
 }

@@ -43,8 +43,8 @@ const style = (theme) => {
       border: "2px solid #000",
       boxShadow: theme.shadows[5],
       padding: theme.spacing(2, 4, 3),
-      height: 500,
-      width: 500,
+      height: "70%",
+      width: "60%",
     },
     paperTrailer: {
       backgroundColor: theme.palette.background.paper,
@@ -55,7 +55,7 @@ const style = (theme) => {
       width: 600,
     },
     paperRigth: {
-      paddingLeft: 50,
+      paddingLeft: theme.spacing(5),
     },
     name:{
       color:"#43425D",

@@ -82,7 +82,7 @@ const UserList = (props) => {
         matKhau: "",
         email: '',
         soDt: "",
-        maNhom: "",
+        maNhom: "GP01",
         maLoaiNguoiDung: "",
         hoTen: "",
       }, role: 1,

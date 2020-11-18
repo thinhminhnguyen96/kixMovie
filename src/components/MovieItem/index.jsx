@@ -177,7 +177,7 @@ const MovieItem = (props) => {
                 <span><p className={props.classes.name}>Mã Nhóm : </p> {maNhom}</span> <br />
                 <span><p className={props.classes.name}>Mã Phim : </p> {maPhim}</span> <br />
                 <span><p className={props.classes.name}>Bí Danh : </p> {biDanh}</span> <br />
-                <span><p className={props.classes.name}>Ngày Khởi Chiếu : </p> {`${(date.getDate() >= 10 ? date.getDate() : "0" + date.getDate()) + "/" + (date.getMonth() >= 10 ? date.getMonth() : "0" + date.getMonth()) + "/" + date.getFullYear() + " " + (date.getHours() >= 10 ? date.getHours() : "0" + date.getHours()) + ":" + (date.getMinutes() >= 10 ? date.getMinutes() : "0" + date.getMinutes())}`}</span> <br />
+                <span><p className={props.classes.name}>Ngày Khởi Chiếu : </p> {`${(date.getDate() >= 10 ? date.getDate() : "0" + date.getDate()) + "/" + (date.getMonth() >= 10 ? (date.getMonth() +1): "0" + (date.getMonth() + 1)) + "/" + date.getFullYear() + " " + (date.getHours() >= 10 ? date.getHours() : "0" + date.getHours()) + ":" + (date.getMinutes() >= 10 ? date.getMinutes() : "0" + date.getMinutes())}`}</span> <br />
                 <span><p className={props.classes.name}>Mô Tả : </p> {moTa.substr(0, 150)}</span> <br />
                 <span><p className={props.classes.name}>Đánh Giá : </p> {danhGia}</span> <br />
                 <br /><br />

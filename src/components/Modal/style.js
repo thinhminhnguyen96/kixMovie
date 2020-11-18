@@ -18,6 +18,14 @@
     modalAdd: {
       width: "100%",
     },
+    modalAddImg: {
+      width: "100%",
+      '&.MuiInputLabel-outlined':{
+        zIndex: 1,
+        transform: "translate(14px, -8px) scale(1)",
+        pointerEvents: "none",
+      }
+    },
 
     btnItemModal: {
       backgroundColor: "#22EE6D",

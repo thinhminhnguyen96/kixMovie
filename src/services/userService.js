@@ -25,7 +25,6 @@ class UserService{
   }
  //Edit User
  addUserService = (data)=>{
-  console.log(data);
   return createConnector({
     method: "POST",
     url: `${this.url}/ThemNguoiDung`,
@@ -35,7 +34,6 @@ class UserService{
 
   //Delete User
  deleteUserService = (id)=>{
-   console.log(id);
   return createConnector({
     method: "DELETE",
     url: `${this.url}/XoaNguoiDung?TaiKhoan=${id}`,
@@ -52,7 +50,6 @@ class UserService{
   }
 
   detailUserService = (taiKhoan)=>{
-    console.log(taiKhoan);
     return createConnector({
       method:"POST",
       url:`${this.url}/ThongTinTaiKhoan`,

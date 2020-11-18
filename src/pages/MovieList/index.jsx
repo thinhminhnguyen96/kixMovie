@@ -67,7 +67,7 @@ const MovieList = (props) => {
         biDanh: "",
         maPhim: "",
         hinhAnh: "",
-        maNhom: "",
+        maNhom: "GP01",
         danhGia: "",
         moTa: "",
         ngayKhoiChieu: "",

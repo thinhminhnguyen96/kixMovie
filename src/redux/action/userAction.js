@@ -35,7 +35,6 @@ export const editUser = (data, callback) => {
 }
 
 export const addUser = (data,callback) => {
-  console.log(data);
   return dispatch => {
     UserService.addUserService(data).then(() => {
       swal({

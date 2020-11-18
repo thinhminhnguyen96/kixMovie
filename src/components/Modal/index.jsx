@@ -7,7 +7,7 @@ import styles from "./style"
 import AddIcon from "@material-ui/icons/Add";
 import CancelIcon from "@material-ui/icons/Cancel";
 import { createAction } from '../../redux/action';
-import { HIDE_MODALMOVIE,SET_CHECKED } from '../../redux/action/type';
+import { HIDE_MODALMOVIE,SET_CHANGED,SET_CHECKED } from '../../redux/action/type';
 import Backdrop from "@material-ui/core/Backdrop";
 import EditIcon from "@material-ui/icons/Edit";
 import { editMovie, addMovie, editMovieNoneImg, fetchMovie } from "../../redux/action/movieAction";
@@ -34,20 +34,19 @@ const ModalMovie = (props) => {
   const checked = useSelector((state) => {
     return state.modalMovies.checked;
   });
-
+  
   const [state, setState] = useState({
     movies: {
       biDanh: '',
       maPhim: '',
       hinhAnh: "",
-      maNhom: '',
+      maNhom: "GP01",
       danhGia: '',
       moTa: '',
       ngayKhoiChieu: '',
       tenPhim: '',
       trailer: '',
     },
-    
   });
   useEffect(() => { setState({ movies: moviea }) }, []);
   const handleClose = useCallback(() => {
@@ -57,9 +56,22 @@ const ModalMovie = (props) => {
   const handleChangeChecked = (event) => {
     dispatch(createAction(SET_CHECKED,{}));
   };
+  const changeDateFormater = useCallback((dae) => {
+    //dd-MM-yyyy
+    let date = new Date(dae);
+    let nkc = `${date.getDate() < 10 ? '0' + date.getDate() : date.getDate()}/${(date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1)}/${date.getFullYear()}`;
+    return nkc;
+  }, []);
+  const changeDateFormater2 = useCallback((dae) => {
+    //yyyy-MM-dd
+    let date = new Date(dae);
+    let nkc = `${date.getFullYear()}-${(date.getMonth() +1) < 10 ? '0' + (date.getMonth() +1) : (date.getMonth () +1)}-${(date.getDate() ) < 10 ? '0' + (date.getDate() ) : (date.getDate() )}`;
+    return nkc;
+  }, []);
 
   const handelOnchange = useCallback(
     (e) => {
+      console.log(e.target.name,e.target.value);
       if (e.target.name === 'hinhAnh') {
         setState({
           movies: { ...state.movies, hinhAnh: e.target.files[0] }
@@ -93,11 +105,7 @@ const ModalMovie = (props) => {
     trailer, } = useMemo(() => {
       return state.movies
     }, [state.movies]);
-  const changeDateFormater = useCallback((dae) => {
-    let date = new Date(dae);
-    let nkc = `${date.getDate() < 10 ? '0' + date.getDate() : date.getDate()}/${(date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1)}/${date.getFullYear()}`;
-    return nkc;
-  }, []);
+  
   const handelSubmit = useCallback((currentPage, perToPage) =>
     (e) => {
       e.preventDefault();
@@ -113,6 +121,8 @@ const ModalMovie = (props) => {
           }else{
             form_data.append(key, state.movies[key]); 
           }
+        }else if(key === 'ngayKhoiChieu'){
+          form_data.append(key, changeDateFormater(state.movies[key]));
         }else{
           form_data.append(key, state.movies[key]);
         }
@@ -148,10 +158,10 @@ const ModalMovie = (props) => {
             icon: "error",
           })
       }
-
+      console.log(form_data)
 
       dispatch(createAction(HIDE_MODALMOVIE));
-
+      
     },
     [state.movies]
   );
@@ -229,12 +239,15 @@ const ModalMovie = (props) => {
 
                 label="Hình Ảnh"
                 variant="outlined"
-                className={props.classes.modalAdd}
+                className={props.classes.modalAddImg}
                 name="hinhAnh"
                 onChange={handelOnchange}
                 disabled={role === 2 && checked}
                 files={hinhAnh}
                 type="file"
+                InputLabelProps={{
+                  shrink: true,
+                }}
               />
             </Grid>
             <Grid item md={6}>
@@ -244,7 +257,7 @@ const ModalMovie = (props) => {
                 <Select
                   labelId="demo-simple-select-outlined-label"
                   id="demo-simple-select-outlined"
-                  value={maNhom}
+                  value={"GP01"}
                   onChange={handelOnchange}
                   label="Mã Nhóm"
                   name="maNhom"
@@ -252,9 +265,7 @@ const ModalMovie = (props) => {
                   <MenuItem value={"GP01"}>
                     <em>GP01</em>
                   </MenuItem>
-                  <MenuItem value={'GP02'}>GP02</MenuItem>
-                  <MenuItem value={'GP03'}>GP03</MenuItem>
-                  <MenuItem value={'GP04'}>GP04</MenuItem>
+                  
                 </Select>
               </FormControl>
 
@@ -277,13 +288,16 @@ const ModalMovie = (props) => {
             <Grid item md={6}>
               <TextField
 
-                label="Ngày Khởi Chiếu (dd/mm/yyyy)"
+                label="Ngày Khởi Chiếu "
                 variant="outlined"
-
+                type= 'date'
                 className={props.classes.modalAdd}
                 name="ngayKhoiChieu"
                 onChange={handelOnchange}
-                value={ngayKhoiChieu}
+                value={changeDateFormater2(ngayKhoiChieu)}
+                 InputLabelProps={{
+                  shrink: true,
+                }}
               />
             </Grid>
 

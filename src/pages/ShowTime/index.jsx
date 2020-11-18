@@ -99,14 +99,22 @@ const ShowTime = (props) => {
       giaVe: "",
       
   }});
-  const date = new Date(ngayKhoiChieu);
+  
+  const changeDateFormater = useCallback((dae) => {
+    //dd-MM-yyyy hh:mm
+    let date = new Date(dae);
+    let nkc = `${(date.getDate() >= 10? date.getDate() : "0"+date.getDate()) +"/"+ (date.getMonth() >= 10? (date.getMonth() +1): "0"+(date.getMonth() +1))+"/" + date.getFullYear() + " " + (date.getHours() >= 10 ? date.getHours() : "0"+ date.getHours()) +":"+ (date.getMinutes() >= 10 ? date.getMinutes() : "0"+ date.getMinutes())}`;
+    
+    return nkc;
+  }, []);
   
   
   const handelSearch = useCallback((e)=>{ 
     setSearch(e.target.value)
     
   },[])
-  const getSearch = useCallback(()=>{
+  const getSearch = useCallback((e)=>{
+    e.preventDefault();
     dispatch(fetchShowTime(parseInt(search) ));
   },[search]);
   
@@ -194,12 +202,16 @@ const ShowTime = (props) => {
             <Grid item md={6}>
               <TextField
                 
-                label="Ngày giờ chiếu (dd/MM/yyyy hh:mm:ss)"
+                label="Ngày giờ chiếu"
                 variant="outlined"
+                placeholder="dd/MM/yyyy hh:mm:ss"
                 className={props.classes.modalAdd}
                 name="ngayChieuGioChieu"
                 onChange={handelOnchange}
                 type="text"
+                InputLabelProps={{
+                  shrink: true,
+                }}
               />
             </Grid>
             <Grid item md={6}>
@@ -217,12 +229,16 @@ const ShowTime = (props) => {
             <Grid item md={6}>
               <TextField
                 
-                label="Giá vé (75.000 - 200.000)"
+                label="Giá vé"
                 variant="outlined"
+                placeholder="75.000 - 200.000"
                 className={props.classes.modalAdd}
                 name="giaVe"
                 onChange={handelOnchange}
                 type="number"
+                InputLabelProps={{
+                  shrink: true,
+                }}
               />
             </Grid>
 
@@ -270,12 +286,12 @@ const ShowTime = (props) => {
           {/* =====TOPCONTENT===== */}
           <Box className={props.classes.content}>
 
-            <Box className={props.classes.headersearch}>
+            <form className={props.classes.headersearch} onSubmit={getSearch}>
               <Box component="h3" variant="h5" paddingBottom={"20px"}>
               Lịch Chiếu Phim
              </Box>
 
-              <Box>
+              <div >
               
               <Box className={props.classes.search}>
               
@@ -295,10 +311,10 @@ const ShowTime = (props) => {
              />
 
               </Box>
-              <Button className={props.classes.searchbtn}  onClick={getSearch}>Mã phim</Button>      
-              </Box>
+              <Button type="submit" className={props.classes.searchbtn}  >Mã phim</Button>      
+              </div>
               
-            </Box>
+            </form>
 
             <Grid container spacing={2} py={5}>
               <Grid
@@ -394,7 +410,7 @@ const ShowTime = (props) => {
                       <span><p className={props.classes.name}>Tên phim : </p> {tenPhim}</span> <br/>
                       <span><p className={props.classes.name}>Mã Nhóm : </p> {maNhom}</span> <br/>
                       <span><p className={props.classes.name}>Mã Phim : </p> {maPhim}</span> <br/>
-                      <span><p className={props.classes.name}>Ngày Khởi Chiếu : </p> {`${(date.getDate() >= 10? date.getDate() : "0"+date.getDate()) +"/"+ (date.getMonth() >= 10? date.getMonth() : "0"+date.getMonth())+"/" + date.getFullYear() + " " + (date.getHours() >= 10 ? date.getHours() : "0"+ date.getHours()) +":"+ (date.getMinutes() >= 10 ? date.getMinutes() : "0"+ date.getMinutes())}`}</span> <br/>
+                      <span><p className={props.classes.name}>Ngày Khởi Chiếu : </p> {changeDateFormater(ngayKhoiChieu)}</span> <br/>
                       <span><p className={props.classes.name}>Mô Tả : </p> {moTa}</span> <br/>
                       <span><p className={props.classes.name}>Đánh Giá : </p> {danhGia}</span> <br/>
                     </Grid>
