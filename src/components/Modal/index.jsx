@@ -122,6 +122,7 @@ const ModalMovie = (props) => {
             form_data.append(key, state.movies[key]); 
           }
         }else if(key === 'ngayKhoiChieu'){
+          console.log(changeDateFormater(state.movies[key]));
           form_data.append(key, changeDateFormater(state.movies[key]));
         }else{
           form_data.append(key, state.movies[key]);

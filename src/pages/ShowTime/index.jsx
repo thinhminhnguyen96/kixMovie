@@ -143,9 +143,9 @@ const ShowTime = (props) => {
     return listShowTime.map((cumRap, index) => {
       return (
         <Box key={index} pb={2} md={12} sm={12} width={"100%"}>  
-            <Box >
-            <img src={cumRap.logo} width={"100px"} height={"100px"}></img>
-            </Box>    
+            <div >
+            <img src={cumRap.logo} className={props.classes.imgLogo}></img>
+            </div>    
           
             {
                 
@@ -156,7 +156,7 @@ const ShowTime = (props) => {
                     <Box ml={3}><h3>{lichChieu.tenCumRap}</h3></Box>
 
                 <Fragment >
-                      <Accordion>
+                  <Accordion>
                     <AccordionSummary
                    expandIcon={<ExpandMoreIcon />}
                    aria-controls="panel1a-content"
@@ -423,7 +423,7 @@ const ShowTime = (props) => {
               <Grid container spacing={2}>
                    { listShowTime.length !== 0 ? renderShowTime() : 
                    <Box marginLeft={"30%"} paddingBottom={"20px"}>
-                     <Typography component={"h4"} variant={"h4"} color={"error"} >Chưa có lịch chiếu</Typography>
+                     <Typography component={"h4"} variant={"h4"} color="primary" >Chưa có lịch chiếu</Typography>
                    </Box>
                    }
               </Grid>

@@ -37,13 +37,15 @@ const style = (theme) => {
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
+      padding:theme.spacing(2,2),
+      overflow:"auto",
     },
     paper: {
       backgroundColor: theme.palette.background.paper,
       border: "2px solid #000",
       boxShadow: theme.shadows[5],
       padding: theme.spacing(2, 4, 3),
-      height: "70%",
+      // height: "auto",
       width: "60%",
     },
     paperTrailer: {
@@ -51,7 +53,7 @@ const style = (theme) => {
       border: "2px solid #000",
       boxShadow: theme.shadows[5],
       padding: theme.spacing(2, 4, 3),
-      height: 400,
+      // height: "auto",
       width: 600,
     },
     paperRigth: {

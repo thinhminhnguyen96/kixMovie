@@ -164,7 +164,11 @@ const MovieItem = (props) => {
       >
         <Fade in={open}>
           <div className={props.classes.paper}>
+            <Box justifyContent={"space-between"} display={"flex"}>
             <h2 id="transition-modal-title">{tenPhim}</h2>
+            <Button onClick={handleToggle(false)}><CloseIcon /></Button>
+            </Box>
+            
             <Grid container>
               <Grid item xs={12} md={4}>
                 <img

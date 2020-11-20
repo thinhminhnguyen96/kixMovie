@@ -179,6 +179,10 @@ const MovieList = (props) => {
                     Phim
                 </Typography>
                   <Button className={props.classes.btnItem} onClick={handleOpen}>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
                     <AddIcon />
                     <p className={props.classes.btnItemText}>Thêm Mới</p>
                   </Button>

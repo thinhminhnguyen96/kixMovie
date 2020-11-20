@@ -40,17 +40,17 @@ const ShowTimeItem = (props) => {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <span><p className={props.classes.name}>{changeDateFormaterDate(ngayChieuGioChieu)} </p> 
+          <span><p className={props.classes.name}>{changeDateFormaterDate(ngayChieuGioChieu)} </p> <br/>
           <p className={props.classes.date}>{changeDateFormaterTime(ngayChieuGioChieu)}</p> 
           </span> <br/>
         </AccordionSummary>
         <AccordionDetails className={props.classes.accordiondetails}>
-      <span><p className={props.classes.name}>Giá vé : </p> {giaVe}</span>
-      <span><p className={props.classes.name}>Mã lịch chiếu : </p> {maLichChieu}</span>
-      <span><p className={props.classes.name}>Mã rạp : </p> {maRap}</span>
+      <span><p className={props.classes.name}>Giá vé : </p> {giaVe}</span> <br/>
+      <span><p className={props.classes.name}>Mã lịch chiếu : </p> {maLichChieu}</span> <br/>
+      <span><p className={props.classes.name}>Mã rạp : </p> {maRap}</span> <br/>
       <span><p className={props.classes.name}>Ngày Khởi Chiếu : </p> {changeDateFormater(ngayChieuGioChieu)}</span> <br/>
-      <span><p className={props.classes.name}>Tên rạp : </p> {tenRap}</span>
-      <span><p className={props.classes.name}>Thời lượng : </p> {thoiLuong}</span>
+      <span><p className={props.classes.name}>Tên rạp : </p> {tenRap}</span><br/>
+      <span><p className={props.classes.name}>Thời lượng : </p> {thoiLuong}</span><br/>
 
       
         </AccordionDetails>

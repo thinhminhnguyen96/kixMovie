@@ -5,6 +5,8 @@ const styles = (theme) =>{
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
+      padding:theme.spacing(2,2),
+      overflow:"auto",
     },
     paper: {
       backgroundColor: theme.palette.background.paper,

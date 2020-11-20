@@ -65,7 +65,7 @@ const style = (theme) => {
       color: "#22D1EE",
     },
 
-    //MODEL
+    
      //MODAL
      modal: {
       display: "flex",
@@ -145,6 +145,14 @@ const style = (theme) => {
       },
       
       }
+    },
+    imgLogo:{
+      width:theme.spacing(10),
+      height:theme.spacing(10),
+      // margin-left: 100px;
+      padding: theme.spacing(0.4),
+      border: "1px solid black",
+      borderRadius: "50%",
     },
     table: {
       marginTop: theme.spacing(5),

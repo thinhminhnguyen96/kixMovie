@@ -32,14 +32,16 @@ const style = (theme) => {
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
+      padding:theme.spacing(2,2),
+      overflow:"auto",
     },
     paper: {
       backgroundColor: theme.palette.background.paper,
       border: "2px solid #000",
       boxShadow: theme.shadows[5],
       padding: theme.spacing(2, 4, 3),
-      height: 500,
-      width: 800,
+      // height: "auto",
+      // width: "700px",
     },
     paperLeft:{
       textAlign:"center"
